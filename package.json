@@ -1,0 +1,35 @@
+{
+  "name": "node-workhorse",
+  "version": "0.0.0",
+  "description": "A state-machine of sorts to delegate work efficiently and with resilience.",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "concurrently": "^1.0.0",
+    "lite-server": "^2.0.1",
+    "mocha": "^2.4.5",
+    "typescript": "^1.7.5",
+    "typings": "^0.6.8"
+  },
+  "scripts": {
+    "postinstall": "npm run typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "lite": "lite-server",
+    "start": "concurrent \"npm run tsc:w\" \"npm run lite\" ",
+    "pretest": "npm run tsc",
+    "test": "npm run mocha",
+    "typings": "typings",
+    "mocha": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colinmathews/node-workhorse.git"
+  },
+  "author": "Colin Mathews",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/colinmathews/node-workhorse/issues"
+  },
+  "homepage": "https://github.com/colinmathews/node-workhorse#readme"
+}
