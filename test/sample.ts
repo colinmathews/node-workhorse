@@ -1,8 +1,9 @@
 /// <reference path="../typings/main.d.ts" />
+import { assert } from 'chai';
 import { Calculator } from '../index';
 
 describe('Calculator', () => {
-    var subject: Calculator;
+    var subject : Calculator;
 
     beforeEach(function () {
         subject = new Calculator();
@@ -10,10 +11,10 @@ describe('Calculator', () => {
 
     describe('#add', () => {
         it('should add two numbers together', () => {
-            var result : number = subject.add(2, 3);
-            if (result !== 5) {
-                throw new Error('Expected 2 + 3 = 5 but was ' + result);
-            }
+            return subject.add(2, 3)
+            .then((result : number) => {
+                assert.equal(result, 5);
+            });
         });
     });
 });
