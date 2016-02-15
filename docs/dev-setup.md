@@ -1,5 +1,15 @@
 # Developer setup
-1. 
+## 1. Install typings globally
+```
+npm install -g typings
+```
+
+## 2. Install mocha and chai typings
+```
+typings install mocha --save --ambient
+typings install chai --save --ambient
+```
+
 
 ### Sublime Text
 Suggested tweaks to your project workspace to hide files:
@@ -10,11 +20,6 @@ Suggested tweaks to your project workspace to hide files:
 	[
 		{
 			"path": "node-workhorse",
-			"file_exclude_patterns":
-			[
-				"*.js",
-				"*.js.map"
-			],
 			"folder_exclude_patterns":
 			[
 				".git",

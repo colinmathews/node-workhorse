@@ -33,6 +33,5 @@ node_modules
 .node_repl_history
 
 # We use Typescript, not JS
-**/*.js
-**/*.js.map
+dist
 typings
