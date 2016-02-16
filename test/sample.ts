@@ -1,20 +1,30 @@
-/// <reference path="../typings/main.d.ts" />
+import '../index';
 import { assert } from 'chai';
-import { Calculator } from '../index';
+import { Workhorse, Config, Work } from '../index';
 
-describe('Calculator', () => {
-    var subject : Calculator;
+describe('Sample', () => {
+  var subject : Workhorse;
 
-    beforeEach(function () {
-        subject = new Calculator();
+  beforeEach(function () {
+    subject = new Workhorse(new Config({
+      workFilePath: `${__dirname}/test-work`
+    }));
+  });
+  describe('#calculator', () => {
+    it('should add two numbers', () => {
+      return subject.run('calculator', { x: 1, y: 2 })
+      .then((work: Work) => {
+        assert.equal(work.result, 3);
+      });
     });
 
-    describe('#add', () => {
-        it('should add two numbers together', () => {
-            return subject.add(2, 3)
-            .then((result : number) => {
-                assert.equal(result, 5);
-            });
-        });
+    it('should fail if numbers not used', () => {
+      return subject.run('calculator', { x: 'error', y: 2 })
+      .then((work: Work) => {
+        assert.isNull(work.result);
+        assert.isNotNull(work.error);
+        assert.typeOf(work.error, 'error');
+      });
     });
+  });
 });
