@@ -1,7 +1,6 @@
 require('source-map-support').install({
   handleUncaughtExceptions: false
 });
-require('es6-promise').polyfill();
 
 import Work from './lib/models/work';
 import Runnable from './lib/interfaces/runnable';

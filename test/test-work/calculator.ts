@@ -1,5 +1,5 @@
+import { Promise } from 'es6-promise';
 import { Runnable, Workhorse, Response, Work } from '../../index';
-// todo: don't make Promise global
 
 export default class Calculator implements Runnable {
   errors: Error[] = [];

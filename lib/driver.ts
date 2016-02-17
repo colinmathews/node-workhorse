@@ -1,3 +1,4 @@
+import { Promise } from 'es6-promise';
 import WorkLoader from './interfaces/work-loader';
 import StateManager from './interfaces/state-manager';
 import Router from './interfaces/router';

@@ -1,3 +1,4 @@
+import { Promise } from 'es6-promise';
 import Work from '../models/work';
 import StateManager from '../interfaces/state-manager';
 
@@ -5,7 +6,7 @@ let nextID = 1;
 let stateMap = {};
 
 export default class MemoryStateManager implements StateManager {
-  save (work: Work): Promise<void> {
+  save (work: Work): Promise<any> {
     if (!work.id) {
       work.id = (nextID++).toString();
     }
@@ -14,7 +15,7 @@ export default class MemoryStateManager implements StateManager {
     return Promise.resolve(null);
   }
 
-  saveAll (work: Work[]): Promise<void> {
+  saveAll (work: Work[]): Promise<any> {
     let promises = work.map((row) => {
       return this.save(row);
     });

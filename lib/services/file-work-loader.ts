@@ -1,11 +1,12 @@
+import { Promise } from 'es6-promise';
 import WorkLoader from '../interfaces/work-loader'
 import Runnable from '../interfaces/runnable';
 
 export default class FileWorkLoader implements WorkLoader {
   private rootWorkPath: string;
 
-  loadAllWork (path: string): Promise<void> {
-    return new Promise<void>((ok, fail) => {
+  loadAllWork (path: string): Promise<any> {
+    return new Promise<any>((ok, fail) => {
       this.rootWorkPath = path;
       ok();
     });
