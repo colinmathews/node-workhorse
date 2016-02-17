@@ -3,8 +3,9 @@ import { Runnable, Workhorse, Response, Work } from '../../index';
 
 export default class Calculator implements Runnable {
   errors: Error[] = [];
-  run (input: any, driver: Workhorse): Promise<Response> {
+  run (work: Work, driver: Workhorse): Promise<Response> {
     return new Promise((ok, fail) => {
+      let input = work.input;
       if (typeof(input.x) !== 'number' || typeof(input.y) !== 'number') {
         return fail(new Error('Inputs must be numbers'));
       }

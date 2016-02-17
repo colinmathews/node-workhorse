@@ -58,7 +58,7 @@ export default class Driver {
     work.result.start();
     return state.save(work)
     .then(() => {
-      return runnable.run(work.input, this)
+      return runnable.run(work, this)
       .then((response: Response) => {
         work.result.end(null, response.result);
         childrenToSpawn = response.childWork;
