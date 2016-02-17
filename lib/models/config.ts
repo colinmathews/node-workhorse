@@ -1,10 +1,12 @@
 import WorkLoader from '../interfaces/work-loader';
 import StateManager from '../interfaces/state-manager';
+import Router from '../interfaces/router';
 
 export default class Config {
   workFilePath: string;
   workLoader: string|WorkLoader;
   stateManager: string|StateManager;
+  router: string|Router;
 
   constructor(props: any = {}) {
     Object.keys(props).forEach((key) => {
@@ -15,6 +17,9 @@ export default class Config {
     }
     if (!this.stateManager) {
       this.stateManager = 'memory-state-manager';
+    }
+    if (!this.router) {
+      this.router = 'memory-router';
     }
   }
 }

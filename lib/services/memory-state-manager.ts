@@ -10,7 +10,18 @@ export default class MemoryStateManager implements StateManager {
       work.id = (nextID++).toString();
     }
     stateMap[work.id] = work;
+    console.log('todo: ' + JSON.stringify(stateMap, null, 2));
     return Promise.resolve(null);
+  }
+
+  saveAll (work: Work[]): Promise<void> {
+    let promises = work.map((row) => {
+      return this.save(row);
+    });
+    return Promise.all(promises)
+    .then(() => {
+      return null;
+    });
   }
 
   load (id: string): Promise<Work> {
