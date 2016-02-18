@@ -170,6 +170,7 @@ export default class Workhorse {
     return this.state.save(work)
     .then(() => {
       this.logger.logForWork(work, 'Starting finalizer');
+      runnable.workhorse = this;
       return runnable.onChildrenDone(work)
       .then((result: any) => {
         this.logger.logForWork(work, 'Finalizer succeeded');
