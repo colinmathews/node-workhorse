@@ -1,4 +1,6 @@
-import '../index';
+require('source-map-support').install({
+  handleUncaughtExceptions: false
+});
 import { assert } from 'chai';
 import { Workhorse, Config, Work, LogLevel } from '../index';
 

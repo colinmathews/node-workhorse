@@ -1,7 +1,3 @@
-require('source-map-support').install({
-  handleUncaughtExceptions: false
-});
-
 import Runnable from './lib/interfaces/runnable';
 import Logger from './lib/interfaces/logger';
 import Router from './lib/interfaces/router';
