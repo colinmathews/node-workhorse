@@ -136,14 +136,17 @@ export default class Workhorse {
     }
 
     let parent: Work;
+    let isDone;
+
     return this.state.load(work.parentID)
     .then((result: Work) => {
       parent = result;
       parent.finishedChildrenIDs.push(work.id);
+      isDone = parent.finishedChildrenIDs.length === parent.childrenIDs.length;
       return this.state.save(parent);
     })
     .then(() => {
-      if (parent.finishedChildrenIDs.length === parent.childrenIDs.length) {
+      if (isDone) {
         return this.checkRunFinalizer(parent);
       }
     });
