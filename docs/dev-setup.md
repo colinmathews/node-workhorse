@@ -36,3 +36,13 @@ Suggested tweaks to your project workspace to hide files:
 	]
 }
 ```
+
+##3. To run tests:
+```
+npm test
+```
+
+To run specific tests
+```
+npm test -- --grep Calc
+```

@@ -12,23 +12,18 @@
   "main": "dist/index.js",
   "devDependencies": {
     "chai": "^3.5.0",
-    "concurrently": "^1.0.0",
-    "lite-server": "^2.0.1",
-    "mocha": "^2.4.5",
-    "typescript": "^1.7.5",
-    "typings": "^0.6.8"
+    "mocha": "^2.4.5"
   },
   "scripts": {
-    "postinstall": "npm run typings install && npm run dist-clean && npm run tsc && rm -rf dist/test",
+    "preinstall": "npm install tsc",
+    "postinstall": "npm run typings install && npm run tsc",
     "tsc": "tsc",
-    "dist-clean": "rm -rf dist",
+    "clean": "rm -rf dist",
+    "clean-tests": "rm -rf dist/test",
     "tsc:w": "tsc -w",
-    "lite": "lite-server",
-    "start": "npm run dist-clean && concurrent \"npm run tsc:w\" \"npm run lite\" ",
-    "pretest": "npm run dist-clean && npm run tsc",
-    "test": "npm run mocha",
-    "typings": "typings",
-    "mocha": "mocha"
+    "pretest": "npm run tsc",
+    "test": "mocha",
+    "typings": "typings"
   },
   "repository": {
     "type": "git",
