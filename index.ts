@@ -20,7 +20,7 @@ import FileWorkLoader from './lib/services/file-work-loader';
 import MemoryRouter from './lib/services/memory-router';
 import MemoryStateManager from './lib/services/memory-state-manager';
 
-import Workhorse from './lib/driver';
+import Workhorse from './lib/workhorse';
 
 export {
   Runnable,

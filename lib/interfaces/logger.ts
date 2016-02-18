@@ -1,10 +1,10 @@
 import { Promise } from 'es6-promise';
 import LogLevel from '../models/log-level';
-import Driver from '../driver';
+import Workhorse from '../workhorse';
 import Work from '../models/work';
 
 interface Logger {
-  driver: Driver;
+  workhorse: Workhorse;
   level: LogLevel;
   log: (message: string, level?: LogLevel|Error) => void;
   logForWork: (work: Work, message: string, level?: LogLevel|Error) => void;

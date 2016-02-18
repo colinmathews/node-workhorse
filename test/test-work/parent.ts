@@ -2,7 +2,7 @@ import { Promise } from 'es6-promise';
 import { Runnable, Workhorse, Response, Work } from '../../index';
 
 export default class Parent implements Runnable {
-  driver: Workhorse;
+  workhorse: Workhorse;
 
   run (work: Work): Promise<Response> {
     return this.randomWait()

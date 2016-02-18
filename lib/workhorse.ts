@@ -10,7 +10,7 @@ import Work from './models/work';
 import WorkResult from './models/work-result';
 import LogLevel from './models/log-level';
 
-export default class Driver {
+export default class Workhorse {
   constructor(public config: Config) {
     if (typeof(config.workLoader) === 'string') {
       config.workLoader = this.loadService(<string>config.workLoader);
@@ -30,7 +30,7 @@ export default class Driver {
     let codePath = `${__dirname}/services/${filePath}`;
     let code = require(codePath);
     let instance = new code.default();
-    instance.driver = this;
+    instance.workhorse = this;
     return instance;
   }
 
@@ -63,7 +63,7 @@ export default class Driver {
       return this.loader.getWork(work.filePath);
     })
     .then((runnable: Runnable) => {
-      runnable.driver = this;
+      runnable.workhorse = this;
       return this.runWork(work, runnable);
     });
   }

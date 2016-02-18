@@ -10,7 +10,7 @@ export default class GrandChild extends Child {
     return this.getParentName(work)
     .then((result) => {
       parentName = result;
-      return this.driver.state.load(work.parentID)
+      return this.workhorse.state.load(work.parentID)
     })
     .then((parent) => {
       return this.getParentName(parent);  

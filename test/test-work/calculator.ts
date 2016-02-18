@@ -3,7 +3,7 @@ import { Runnable, Workhorse, Response, Work } from '../../index';
 
 export default class Calculator implements Runnable {
   errors: Error[] = [];
-  driver: Workhorse;
+  workhorse: Workhorse;
 
   run (work: Work): Promise<Response> {
     return new Promise((ok, fail) => {

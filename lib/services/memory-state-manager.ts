@@ -1,13 +1,13 @@
 import { Promise } from 'es6-promise';
 import Work from '../models/work';
 import StateManager from '../interfaces/state-manager';
-import Driver from '../driver';
+import Workhorse from '../workhorse';
 
 let nextID = 1;
 let stateMap = {};
 
 export default class MemoryStateManager implements StateManager {
-  driver: Driver;
+  workhorse: Workhorse;
 
   save (work: Work): Promise<any> {
     if (!work.id) {

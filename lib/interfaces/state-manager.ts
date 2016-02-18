@@ -1,9 +1,9 @@
 import { Promise } from 'es6-promise';
 import { Work } from '../../index';
-import Driver from '../driver';
+import Workhorse from '../workhorse';
 
 interface StateManager {
-  driver: Driver;
+  workhorse: Workhorse;
   save: (work: Work) => Promise<any>;
   saveAll: (work: Work[]) => Promise<any>;
   load: (id: string) => Promise<Work>;

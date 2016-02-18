@@ -1,11 +1,11 @@
 import { Promise } from 'es6-promise';
 import Logger from '../interfaces/logger'
 import LogLevel from '../models/log-level';
-import Driver from '../driver';
+import Workhorse from '../workhorse';
 import Work from '../models/work';
 
 export default class ConsoleLogger implements Logger {
-  driver: Driver;
+  workhorse: Workhorse;
   level: LogLevel;
 
   log (message: string, level?: LogLevel|Error) {

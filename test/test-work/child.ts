@@ -26,7 +26,7 @@ export default class Child extends Parent {
   }
 
   protected getParentName (work: Work): Promise<string> {
-    return this.driver.state.load(work.parentID)
+    return this.workhorse.state.load(work.parentID)
     .then((parent) => {
       if (!parent) {
         return null;

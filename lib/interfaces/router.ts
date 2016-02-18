@@ -1,9 +1,9 @@
 import { Promise } from 'es6-promise';
 import Route from '../models/route';
-import Driver from '../driver';
+import Workhorse from '../workhorse';
 
 interface Router {
-  driver: Driver;
+  workhorse: Workhorse;
   route: (options: Route) => Promise<any>;
 }
 

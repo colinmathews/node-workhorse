@@ -1,9 +1,9 @@
 import { Promise } from 'es6-promise';
 import Runnable from './runnable';
-import Driver from '../driver';
+import Workhorse from '../workhorse';
 
 interface WorkLoader {
-  driver: Driver;
+  workhorse: Workhorse;
   loadAllWork: (path: string) => Promise<any>;
   getWork: (path: string) => Promise<Runnable>;
 }

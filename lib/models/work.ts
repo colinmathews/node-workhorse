@@ -1,6 +1,6 @@
 import Runnable from '../interfaces/runnable';
 import WorkResult from './work-result';
-import Driver from '../driver';
+import Workhorse from '../workhorse';
 import clone from '../util/clone';
 
 export default class Work {
@@ -20,15 +20,15 @@ export default class Work {
     this.input = input;
   }
 
-  prettyPrint (driver: Driver): Promise<any> {
+  prettyPrint (workhorse: Workhorse): Promise<any> {
     let json = clone(this);
     delete json.finishedChildrenIDs;
 
-    return driver.state.loadAll(this.childrenIDs)
+    return workhorse.state.loadAll(this.childrenIDs)
     .then((children: Work[]) => {
       delete json.childrenIDs;
       let promises = children.map((child) => {
-        return child.prettyPrint(driver);
+        return child.prettyPrint(workhorse);
       });
       return Promise.all(promises)
       .then((children) => {
