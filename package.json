@@ -1,6 +1,6 @@
 {
   "name": "node-workhorse",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A state-machine of sorts to delegate work efficiently and with resilience.",
   "dependencies": {
     "es6-promise": "^3.1.2",
