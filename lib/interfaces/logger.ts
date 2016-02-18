@@ -5,6 +5,7 @@ import Work from '../models/work';
 
 interface Logger {
   driver: Driver;
+  level: LogLevel;
   log: (message: string, level?: LogLevel|Error) => void;
   logForWork: (work: Work, message: string, level?: LogLevel|Error) => void;
   flush: () => Promise<any>;

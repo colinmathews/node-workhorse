@@ -12,7 +12,7 @@ export default class Child extends Parent {
       return this.randomWait();
     })
     .then(() => {
-      return this.createChildWork();
+      return this.createChildWork(work);
     })
     .then((children: Work[]) => {
       return {
@@ -35,11 +35,12 @@ export default class Child extends Parent {
     });
   }
 
-  protected createChildWork() {
-    let count = 1 + Math.round(Math.random() * 3);
+  protected createChildWork(work: Work) {
+    let count = work.input.kids;
     let list = [];
     for (let i = 0; i < count; i++) {
       list.push(new Work('grand-child', {
+        index: i,
         name: `Grandchild ${i + 1}`
       }));
     }

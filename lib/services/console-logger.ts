@@ -6,6 +6,8 @@ import Work from '../models/work';
 
 export default class ConsoleLogger implements Logger {
   driver: Driver;
+  level: LogLevel;
+
   log (message: string, level?: LogLevel|Error) {
     let formattedMessage = message;
     let err;
@@ -16,6 +18,11 @@ export default class ConsoleLogger implements Logger {
     }
     if (!level) {
       level = LogLevel.Info;
+    }
+
+    // Ignore
+    if (this.level && this.level < level) {
+      return;
     }
 
     switch(level) {

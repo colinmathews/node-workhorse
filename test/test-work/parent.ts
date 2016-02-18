@@ -7,7 +7,7 @@ export default class Parent implements Runnable {
   run (work: Work): Promise<Response> {
     return this.randomWait()
     .then(() => {
-      return this.createChildWork();
+      return this.createChildWork(work);
     })
     .then((children: Work[]) => {
       return {
@@ -28,12 +28,14 @@ export default class Parent implements Runnable {
     });
   }
 
-  protected createChildWork(): Work[] {
-    let count = 1 + Math.round(Math.random() * 3);
+  protected createChildWork(work: Work): Work[] {
+    let count = work.input.kids;
     let list = [];
     for (let i = 0; i < count; i++) {
       list.push(new Work('child', {
-        name: `Child ${i + 1}`
+        index: i,
+        name: `Child ${i + 1}`,
+        kids: work.input.grandKids
       }));
     }
     return list;

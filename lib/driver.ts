@@ -159,6 +159,7 @@ export default class Driver {
         this.logger.logForWork(work, 'All children are done, but no finalizer is defined');
         return;
       }
+      // TODO: This should call router, not run the work ourselves
       return this.runFinalizer(work, runnable);
     });
   }
