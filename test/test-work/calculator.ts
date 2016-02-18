@@ -3,7 +3,9 @@ import { Runnable, Workhorse, Response, Work } from '../../index';
 
 export default class Calculator implements Runnable {
   errors: Error[] = [];
-  run (work: Work, driver: Workhorse): Promise<Response> {
+  driver: Workhorse;
+
+  run (work: Work): Promise<Response> {
     return new Promise((ok, fail) => {
       let input = work.input;
       if (typeof(input.x) !== 'number' || typeof(input.y) !== 'number') {
@@ -11,7 +13,7 @@ export default class Calculator implements Runnable {
       }
       let children;
       if (input.twice) {
-        children = this.createChildWork(input, driver);
+        children = this.createChildWork(input);
       }
       ok({
         result: input.x + input.y,
@@ -20,14 +22,14 @@ export default class Calculator implements Runnable {
     });
   }
 
-  private createChildWork(input: any, driver: Workhorse) {
+  private createChildWork(input: any) {
     return [new Work('calculator', {
       x: input.x,
       y: input.y
     })];
   }
 
-  onChildrenDone (work: Work, driver: Workhorse): Promise<any> {
+  onChildrenDone (work: Work): Promise<any> {
     return Promise.resolve();
   }
 }

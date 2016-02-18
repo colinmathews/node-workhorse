@@ -6,11 +6,12 @@ import StateManager from '../interfaces/state-manager';
 import Driver from '../driver';
 
 export default class MemoryRouter implements Router {
-  route (options: Route, driver: Driver): Promise<any> {
-    let state = <StateManager>driver.config.stateManager;
-    return state.load(options.workID)
+  driver: Driver;
+
+  route (options: Route): Promise<any> {
+    return this.driver.state.load(options.workID)
     .then((work: Work) => {
-      return driver.run(work);
+      return this.driver.run(work);
     })
     .then(() => {
       return null;

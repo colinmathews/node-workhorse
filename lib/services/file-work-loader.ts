@@ -1,9 +1,11 @@
 import { Promise } from 'es6-promise';
 import WorkLoader from '../interfaces/work-loader'
 import Runnable from '../interfaces/runnable';
+import Driver from '../driver';
 
 export default class FileWorkLoader implements WorkLoader {
   private rootWorkPath: string;
+  driver: Driver;
 
   loadAllWork (path: string): Promise<any> {
     return new Promise<any>((ok, fail) => {

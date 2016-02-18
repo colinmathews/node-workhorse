@@ -4,8 +4,9 @@ import Work from '../models/work';
 import Driver from '../driver';
 
 interface Runnable {
-  run: (work: Work, driver: Driver) => Promise<Response>;
-  onChildrenDone?: (work: Work, driver: Driver) => Promise<any>;
+  driver: Driver;
+  run: (work: Work) => Promise<Response>;
+  onChildrenDone?: (work: Work) => Promise<any>;
 }
 
 export default Runnable
