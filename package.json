@@ -16,7 +16,8 @@
   },
   "scripts": {
     "preinstall": "npm install tsc",
-    "postinstall": "npm run typings install && npm run tsc",
+    "postinstall": "npm run typings install",
+    "prepublish": "npm run tsc",
     "tsc": "tsc",
     "clean": "rm -rf dist",
     "clean-tests": "rm -rf dist/test",
