@@ -17,4 +17,14 @@ export default class MemoryRouter implements Router {
       return null;
     });
   }
+
+  routeFinalizer (options: Route): Promise<any> {
+    return this.workhorse.state.load(options.workID)
+    .then((work: Work) => {
+      return this.workhorse.runFinalizer(work);
+    })
+    .then(() => {
+      return null;
+    });
+  }
 }

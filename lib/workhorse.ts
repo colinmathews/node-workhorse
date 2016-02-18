@@ -68,6 +68,19 @@ export default class Workhorse {
     });
   }
 
+  runFinalizer(work: Work): Promise<Work> {
+    return this.loader.loadAllWork(this.config.workFilePath)
+    .then(() => {
+      return this.loader.getWork(work.filePath);
+    })
+    .then((runnable: Runnable) => {
+      return this.runFinalizerWork(work, runnable);
+    })
+    .then(() => {
+      return work;
+    });
+  }
+
   private normalizeRunData(data: Work|string, input?: any): Promise<Work> {
     if (typeof(data) === 'string') {
       let work = new Work(<string>data, input);
@@ -162,12 +175,12 @@ export default class Workhorse {
         this.logger.logForWork(work, 'All children are done, but no finalizer is defined');
         return;
       }
-      // TODO: This should call router, not run the work ourselves
-      return this.runFinalizer(work, runnable);
+      this.logger.logForWork(work, `Routing finalizer`);
+      return this.router.routeFinalizer({ workID: work.id });
     });
   }
 
-  private runFinalizer(work: Work, runnable: Runnable): Promise<any> {
+  private runFinalizerWork(work: Work, runnable: Runnable): Promise<any> {
     work.finalizerResult = new WorkResult();
     work.finalizerResult.start();
     return this.state.save(work)
