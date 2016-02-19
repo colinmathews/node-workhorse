@@ -24,13 +24,15 @@ export default class Workhorse {
     if (typeof(config.logger) === 'string') {
       config.logger = this.loadService(<string>config.logger);
     }
+    [config.workLoader, config.stateManager, config.router, config.router].forEach((row) => {
+      row.workhorse = this;
+    });
   }
 
   private loadService(filePath: string) {
     let codePath = `${__dirname}/services/${filePath}`;
     let code = require(codePath);
     let instance = new code.default();
-    instance.workhorse = this;
     return instance;
   }
 
