@@ -5,7 +5,7 @@ import clone from '../util/clone';
 
 export default class Work {
   id: string;
-  filePath: string;
+  workLoadHref: string;
   input: any;
   result: WorkResult;
   finalizerResult: WorkResult;
@@ -15,8 +15,8 @@ export default class Work {
 
   runnable: Runnable;
 
-  constructor(filePath?: string, input?: any) {
-    this.filePath = filePath;
+  constructor(workLoadHref?: string, input?: any) {
+    this.workLoadHref = workLoadHref;
     this.input = input;
   }
 

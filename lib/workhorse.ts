@@ -11,7 +11,7 @@ import WorkResult from './models/work-result';
 import LogLevel from './models/log-level';
 
 export default class Workhorse {
-  constructor(public config: Config) {
+  constructor(public config: Config = new Config()) {
     if (typeof(config.workLoader) === 'string') {
       config.workLoader = this.loadService(<string>config.workLoader);
     }
@@ -26,6 +26,7 @@ export default class Workhorse {
     }
   }
 
+  // TODO: use workHref style instead of actual file paths
   private loadService(filePath: string) {
     let codePath = `${__dirname}/services/${filePath}`;
     let code = require(codePath);
@@ -63,11 +64,8 @@ export default class Workhorse {
     return this.normalizeRunData(data, input)
     .then((result) => {
       work = result;
-      this.logger.log(`Loading work: ${work.filePath}:${work.id}`);
-      return this.loader.loadAllWork(this.config.workFilePath);
-    })
-    .then(() => {
-      return this.loader.getWork(work.filePath);
+      this.logger.log(`Loading work: ${work.workLoadHref}:${work.id}`);
+      return this.loader.getWork(work.workLoadHref)
     })
     .then((runnable: Runnable) => {
       runnable.workhorse = this;
@@ -76,10 +74,7 @@ export default class Workhorse {
   }
 
   runFinalizer(work: Work): Promise<Work> {
-    return this.loader.loadAllWork(this.config.workFilePath)
-    .then(() => {
-      return this.loader.getWork(work.filePath);
-    })
+    return this.loader.getWork(work.workLoadHref)
     .then((runnable: Runnable) => {
       return this.runFinalizerWork(work, runnable);
     })
@@ -173,10 +168,7 @@ export default class Workhorse {
   }
 
   private checkRunFinalizer(work: Work): Promise<void> {
-    return this.loader.loadAllWork(this.config.workFilePath)
-    .then(() => {
-      return this.loader.getWork(work.filePath);
-    })
+    return this.loader.getWork(work.workLoadHref)
     .then((runnable: Runnable) => {
       if (!runnable.onChildrenDone) {
         this.logger.logForWork(work, 'All children are done, but no finalizer is defined');
@@ -222,7 +214,7 @@ export default class Workhorse {
     })
     .then(() => {
       let promises = children.map((work: Work) => {
-        this.logger.logForWork(parent, `Routing child work: ${work.filePath}:${work.id}`);
+        this.logger.logForWork(parent, `Routing child work: ${work.workLoadHref}:${work.id}`);
         return this.router.route({ workID: work.id });
       });
       return Promise.all(promises);

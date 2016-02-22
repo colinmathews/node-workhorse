@@ -44,7 +44,7 @@ export default class ConsoleLogger implements Logger {
   }
 
   logForWork (work: Work, message: string, level?: LogLevel|Error) {
-    return this.log(`${message}: ${work.filePath}:${work.id}`, level);
+    return this.log(`${message}: ${work.workLoadHref}:${work.id}`, level);
   }
 
   flush (): Promise<any> {

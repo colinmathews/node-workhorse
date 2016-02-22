@@ -6,11 +6,10 @@ import { Workhorse, Config, Work, LogLevel } from '../index';
 
 describe('Family Tree', () => {
   let subject : Workhorse;
+  let baseWorkPath = `${__dirname}/test-work/`;
 
   beforeEach(function () {
-    subject = new Workhorse(new Config({
-      workFilePath: `${__dirname}/test-work`
-    }));
+    subject = new Workhorse();
     subject.logger.level = LogLevel.None;
   });
 
@@ -40,7 +39,7 @@ describe('Family Tree', () => {
     };
 
     it('should run deeply', () => {
-      return subject.run('parent', { name: 'Colin', kids: 3, grandKids: 2 })
+      return subject.run(`${baseWorkPath}parent`, { name: 'Colin', kids: 3, grandKids: 2 })
       .then((work: Work) => {
         assert.isNotNull(work.result);
         return work.prettyPrint(subject);

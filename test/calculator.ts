@@ -6,17 +6,16 @@ import { Workhorse, Config, Work, LogLevel } from '../index';
 
 describe('Calculator', () => {
   let subject : Workhorse;
+  let baseWorkPath = `${__dirname}/test-work/`;
 
   beforeEach(function () {
-    subject = new Workhorse(new Config({
-      workFilePath: `${__dirname}/test-work`
-    }));
+    subject = new Workhorse();
     subject.logger.level = LogLevel.None;
   });
 
   describe('#run', () => {
     it('should add two numbers', () => {
-      return subject.run('calculator', { x: 1, y: 2 })
+      return subject.run(`${baseWorkPath}calculator`, { x: 1, y: 2 })
       .then((work: Work) => {
         assert.isNotNull(work.result);
         assert.equal(work.result.result, 3);
@@ -24,7 +23,7 @@ describe('Calculator', () => {
     });
 
     it('should spawn child work', () => {
-      return subject.run('calculator', { x: 1, y: 2, twice: true })
+      return subject.run(`${baseWorkPath}calculator`, { x: 1, y: 2, twice: true })
       .then((work: Work) => {
         assert.isNotNull(work.result);
         assert.equal(work.result.result, 3);
@@ -32,7 +31,7 @@ describe('Calculator', () => {
     });
 
     it('should fail if numbers not used', () => {
-      return subject.run('calculator', { x: 'error', y: 2 })
+      return subject.run(`${baseWorkPath}calculator`, { x: 'error', y: 2 })
       .then((work: Work) => {
         assert.isNotNull(work.result);
         assert.isNull(work.result.result);

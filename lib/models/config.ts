@@ -4,7 +4,6 @@ import Router from '../interfaces/router';
 import Logger from '../interfaces/logger';
 
 export default class Config {
-  workFilePath: string;
   workLoader: string|WorkLoader;
   stateManager: string|StateManager;
   router: string|Router;

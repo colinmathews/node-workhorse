@@ -4,6 +4,7 @@ import { Runnable, Workhorse, Response, Work } from '../../index';
 export default class Calculator implements Runnable {
   errors: Error[] = [];
   workhorse: Workhorse;
+  baseWorkPath: string = `${__dirname}/`;
 
   run (work: Work): Promise<Response> {
     return new Promise((ok, fail) => {
@@ -23,7 +24,7 @@ export default class Calculator implements Runnable {
   }
 
   private createChildWork(input: any) {
-    return [new Work('calculator', {
+    return [new Work(`${this.baseWorkPath}calculator`, {
       x: input.x,
       y: input.y
     })];
