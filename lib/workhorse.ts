@@ -30,24 +30,31 @@ export default class Workhorse {
     let codePath = `${__dirname}/services/${filePath}`;
     let code = require(codePath);
     let instance = new code.default();
-    instance.workhorse = this;
     return instance;
   }
 
   get state() {
-    return <StateManager>this.config.stateManager;
+    let obj = <StateManager>this.config.stateManager;
+    obj.workhorse = this;
+    return obj;
   }
 
   get loader() {
-    return <WorkLoader>this.config.workLoader;
+    let obj = <WorkLoader>this.config.workLoader;
+    obj.workhorse = this;
+    return obj;
   }
 
   get router() {
-    return <Router>this.config.router;
+    let obj = <Router>this.config.router;
+    obj.workhorse = this;
+    return obj;
   }
 
   get logger() {
-    return <Logger>this.config.logger;
+    let obj = <Logger>this.config.logger;
+    obj.workhorse = this;
+    return obj;
   }
 
   run(data: Work|string, input?: any): Promise<Work> {
