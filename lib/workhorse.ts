@@ -9,6 +9,7 @@ import Response from './models/response';
 import Work from './models/work';
 import WorkResult from './models/work-result';
 import LogLevel from './models/log-level';
+import dynamicLoader from './util/dynamic-loader';
 
 export default class Workhorse {
   constructor(public config: Config = new Config()) {
@@ -26,12 +27,8 @@ export default class Workhorse {
     }
   }
 
-  // TODO: use workHref style instead of actual file paths
-  private loadService(filePath: string) {
-    let codePath = `${__dirname}/services/${filePath}`;
-    let code = require(codePath);
-    let instance = new code.default();
-    return instance;
+  private loadService(serviceHref: string) {
+    return dynamicLoader(serviceHref);
   }
 
   get state() {
