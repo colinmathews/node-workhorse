@@ -2,14 +2,28 @@ let fs = require('fs');
 let path = require('path');
 import deepDots from './deep-dots';
 
+let _pathFromThisModule = (relativePath) => {
+  let extension = path.extname(relativePath);
+  let filePath1 = path.resolve(__dirname, relativePath);
+  let filePath2 = path.resolve(__dirname, '../', relativePath);
+  if (!extension) {
+    filePath1 += '.js';
+    filePath2 += '.js';
+  }
+
+  if (fs.existsSync(filePath1)) {
+    console.log('todo: filepath1 = %s', filePath1);
+    return filePath1;
+  }
+  console.log('todo: filepath2 = %s', filePath2);
+  return filePath2;
+};
+
 let packageName;
 let _currentPackageName = () => {
-  if (packageName) {
-    return packageName;
-  }
-  let json = fs.readFileSync(path.resolve(__dirname, '../../../package.json'));
-  let meta = JSON.parse(json);
-  return meta.name;
+  let filePath = _pathFromThisModule('../../package.json');
+  let packageMeta = require(filePath);
+  return packageMeta.name;
 };
 
 let _loadClass = (modulePath, className) => {
@@ -43,7 +57,7 @@ let _instantiate = (oClass, href) => {
 export default function (href) {
   let [ modulePath, className ] = href.split(':');
   if (modulePath === _currentPackageName()) {
-    modulePath = path.resolve(__dirname, '../../index');
+    modulePath = _pathFromThisModule('../../index');
   }
   let oClass = _loadClass(modulePath, className);
   return _instantiate(oClass, href);
