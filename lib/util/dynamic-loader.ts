@@ -2,30 +2,6 @@ let fs = require('fs');
 let path = require('path');
 import deepDots from './deep-dots';
 
-let _pathFromThisModule = (relativePath) => {
-  let extension = path.extname(relativePath);
-  let filePath1 = path.resolve(__dirname, relativePath);
-  let filePath2 = path.resolve(__dirname, '../', relativePath);
-  if (!extension) {
-    filePath1 += '.js';
-    filePath2 += '.js';
-  }
-
-  if (fs.existsSync(filePath1)) {
-    console.log('todo: filepath1 = %s', filePath1);
-    return filePath1;
-  }
-  console.log('todo: filepath2 = %s', filePath2);
-  return filePath2;
-};
-
-let packageName;
-let _currentPackageName = () => {
-  let filePath = _pathFromThisModule('../../package.json');
-  let packageMeta = require(filePath);
-  return packageMeta.name;
-};
-
 let _loadClass = (modulePath, className) => {
   let oClass = require(modulePath);
   if (!oClass) {
@@ -40,25 +16,29 @@ let _loadClass = (modulePath, className) => {
   return oClass;
 };
 
-let _instantiate = (oClass, href) => {
+export function instantiate(oClass){
   if (!oClass.prototype) {
     oClass = oClass.default;
   }
   if (!oClass.prototype) {
-    throw new Error(`Expected ${href} to have a prototype`); 
+    return null;
   }
   let instance = Object.create(oClass.prototype);
   if (instance.constructor) {
     instance.constructor.apply(instance);
   }
   return instance;
-};
+}
 
-export default function (href) {
+export function instantiateFromPath(href:string) {
   let [ modulePath, className ] = href.split(':');
-  if (modulePath === _currentPackageName()) {
-    modulePath = _pathFromThisModule('../../index');
+  if (!modulePath) {
+    modulePath = path.resolve(__dirname, '../../index');
   }
   let oClass = _loadClass(modulePath, className);
-  return _instantiate(oClass, href);
+  let instance = instantiate(oClass);
+  if (!instance) {
+    throw new Error(`Expected ${href} to have a prototype`);
+  }
+  return instance;
 }

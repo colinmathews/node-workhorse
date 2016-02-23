@@ -49,7 +49,7 @@ describe('Family Tree', () => {
         sortKidsByIndex(pretty.children);
         assert.lengthOf(pretty.children[0].children, 2);
         assert.lengthOf(pretty.children[1].children, 2);
-        assert.isTrue(new Date(pretty.finalizerResult.started) > 
+        assert.isTrue(new Date(pretty.finalizerResult.started) >=
           lastEndDate(pretty.children), 'The parent finalizer should have started after everyone else finished.');
       });
     });

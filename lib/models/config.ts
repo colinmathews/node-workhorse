@@ -14,16 +14,16 @@ export default class Config {
       this[key] = props[key];
     });
     if (!this.workLoader) {
-      this.workLoader = 'node-workhorse:FileWorkLoader';
+      this.workLoader = ':FileWorkLoader';
     }
     if (!this.stateManager) {
-      this.stateManager = 'node-workhorse:MemoryStateManager';
+      this.stateManager = ':MemoryStateManager';
     }
     if (!this.router) {
-      this.router = 'node-workhorse:MemoryRouter';
+      this.router = ':MemoryRouter';
     }
     if (!this.logger) {
-      this.logger = 'node-workhorse:ConsoleLogger';
+      this.logger = ':ConsoleLogger';
     }
   }
 }
