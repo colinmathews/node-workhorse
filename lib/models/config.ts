@@ -4,7 +4,6 @@ import Router from '../interfaces/router';
 import Logger from '../interfaces/logger';
 
 export default class Config {
-  workFilePath: string;
   workLoader: string|WorkLoader;
   stateManager: string|StateManager;
   router: string|Router;
@@ -15,16 +14,16 @@ export default class Config {
       this[key] = props[key];
     });
     if (!this.workLoader) {
-      this.workLoader = 'file-work-loader';
+      this.workLoader = ':FileWorkLoader';
     }
     if (!this.stateManager) {
-      this.stateManager = 'memory-state-manager';
+      this.stateManager = ':MemoryStateManager';
     }
     if (!this.router) {
-      this.router = 'memory-router';
+      this.router = ':MemoryRouter';
     }
     if (!this.logger) {
-      this.logger = 'console-logger';
+      this.logger = ':ConsoleLogger';
     }
   }
 }

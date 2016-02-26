@@ -18,6 +18,28 @@ import MemoryStateManager from './lib/services/memory-state-manager';
 
 import Workhorse from './lib/workhorse';
 
+// TODO: Figure out why if we don't 
+// export a class with access to the import statements,
+// the .d.ts file will not bring over the import statements.
+export class shim {
+  a: Runnable;
+  b: Logger;
+  c: Router;
+  d: StateManager;
+  e: WorkLoader;
+  f: Config;
+  g: LogLevel;
+  h: Response;
+  i: Route;
+  j: WorkResult;
+  k: Work;
+  l: ConsoleLogger;
+  m: FileWorkLoader;
+  n: MemoryRouter;
+  o: MemoryStateManager;
+  p: Workhorse;
+}
+
 export {
   Runnable,
   Logger,

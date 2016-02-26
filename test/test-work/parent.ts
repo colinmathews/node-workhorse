@@ -3,6 +3,7 @@ import { Runnable, Workhorse, Response, Work } from '../../index';
 
 export default class Parent implements Runnable {
   workhorse: Workhorse;
+  baseWorkPath: string = `${__dirname}/`;
 
   run (work: Work): Promise<Response> {
     return this.randomWait()
@@ -32,7 +33,7 @@ export default class Parent implements Runnable {
     let count = work.input.kids;
     let list = [];
     for (let i = 0; i < count; i++) {
-      list.push(new Work('child', {
+      list.push(new Work(`${this.baseWorkPath}child`, {
         index: i,
         name: `Child ${i + 1}`,
         kids: work.input.grandKids

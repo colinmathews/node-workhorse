@@ -4,7 +4,6 @@ import Workhorse from '../workhorse';
 
 interface WorkLoader {
   workhorse: Workhorse;
-  loadAllWork: (path: string) => Promise<any>;
   getWork: (path: string) => Promise<Runnable>;
 }
 

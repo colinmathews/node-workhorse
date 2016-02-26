@@ -39,7 +39,7 @@ export default class Child extends Parent {
     let count = work.input.kids;
     let list = [];
     for (let i = 0; i < count; i++) {
-      list.push(new Work('grand-child', {
+      list.push(new Work(`${this.baseWorkPath}grand-child`, {
         index: i,
         name: `Grandchild ${i + 1}`
       }));
