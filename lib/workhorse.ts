@@ -132,10 +132,10 @@ export default class Workhorse {
       }
     })
     .then(() => {
-      return this.onEnded(work);
+      return this.logger.flush();
     })
     .then(() => {
-      return this.logger.flush();
+      return this.onEnded(work);
     })
     .then(() => {
       return work;
@@ -143,25 +143,27 @@ export default class Workhorse {
   }
 
   private onEnded(work: Work): Promise<any> {
-    this.logger.workEnded(work);
-    if (!work.parentID) {
-      return Promise.resolve(null);
-    }
-
-    let parent: Work;
-    let isDone;
-
-    return this.state.load(work.parentID)
-    .then((result: Work) => {
-      parent = result;
-      parent.finishedChildrenIDs.push(work.id);
-      isDone = parent.finishedChildrenIDs.length === parent.childrenIDs.length;
-      return this.state.save(parent);
-    })
+    return this.logger.workEnded(work)
     .then(() => {
-      if (isDone) {
-        return this.checkRunFinalizer(parent);
+      if (!work.parentID) {
+        return;
       }
+      
+      let parent: Work;
+      let isDone;
+
+      return this.state.load(work.parentID)
+      .then((result: Work) => {
+        parent = result;
+        parent.finishedChildrenIDs.push(work.id);
+        isDone = parent.finishedChildrenIDs.length === parent.childrenIDs.length;
+        return this.state.save(parent);
+      })
+      .then(() => {
+        if (isDone) {
+          return this.checkRunFinalizer(parent);
+        }
+      });
     });
   }
 

@@ -9,7 +9,7 @@ interface Logger {
   log: (message: string, level?: LogLevel|Error) => void;
   logInsideWork: (work: Work, message: string, level?: LogLevel | Error) => void;
   logOutsideWork: (work: Work, message: string, level?: LogLevel | Error) => void;
-  workEnded: (work: Work) => void;
+  workEnded: (work: Work) => Promise<any>;
   flush: () => Promise<any>;
 }
 

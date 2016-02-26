@@ -8,7 +8,7 @@ export default class ConsoleLogger implements Logger {
   workhorse: Workhorse;
   level: LogLevel;
 
-  log (message: string, level?: LogLevel|Error) {
+  log(message: string, level?: LogLevel|Error) {
     let err;
     [level, err] = ConsoleLogger.parseLevel(level);
     let formattedMessage = ConsoleLogger.formatMessage(message, level);
@@ -32,18 +32,19 @@ export default class ConsoleLogger implements Logger {
     }
   }
 
-  logInsideWork (work: Work, message: string, level?: LogLevel|Error) {
+  logInsideWork(work: Work, message: string, level?: LogLevel|Error) {
     return this.log(`${message}: ${work.workLoadHref}:${work.id}`, level);
   }
 
-  logOutsideWork (work: Work, message: string, level?: LogLevel|Error) {
+  logOutsideWork(work: Work, message: string, level?: LogLevel|Error) {
     return this.log(`${message}: ${work.workLoadHref}:${work.id}`, level);
   }
 
-  workEnded () {
+  workEnded(): Promise<any> {
+    return Promise.resolve();
   }
 
-  flush (): Promise<any> {
+  flush(): Promise<any> {
     return Promise.resolve();
   }
 
