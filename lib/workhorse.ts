@@ -107,15 +107,15 @@ export default class Workhorse {
     work.result.start();
     return this.state.save(work)
     .then(() => {
-      this.logger.logForWork(work, 'Running work');
+      this.logger.logOutsideWork(work, 'Running work');
       return runnable.run(work)
       .then((response: Response) => {
-        this.logger.logForWork(work, 'Work succeeded');
+        this.logger.logOutsideWork(work, 'Work succeeded');
         work.result.end(null, response.result);
         childrenToSpawn = response.childWork;
       })
       .catch((err: Error) => {
-        this.logger.logForWork(work, 'Work failed', err);
+        this.logger.logOutsideWork(work, 'Work failed', err);
         work.result.end(err);
       });
     })
@@ -143,6 +143,7 @@ export default class Workhorse {
   }
 
   private onEnded(work: Work): Promise<any> {
+    this.logger.workEnded(work);
     if (!work.parentID) {
       return Promise.resolve(null);
     }
@@ -168,10 +169,10 @@ export default class Workhorse {
     return this.loader.getWork(work.workLoadHref)
     .then((runnable: Runnable) => {
       if (!runnable.onChildrenDone) {
-        this.logger.logForWork(work, 'All children are done, but no finalizer is defined');
+        this.logger.logOutsideWork(work, 'All children are done, but no finalizer is defined');
         return;
       }
-      this.logger.logForWork(work, `Routing finalizer`);
+      this.logger.logOutsideWork(work, `Routing finalizer`);
       return this.router.routeFinalizer({ workID: work.id });
     });
   }
@@ -181,15 +182,15 @@ export default class Workhorse {
     work.finalizerResult.start();
     return this.state.save(work)
     .then(() => {
-      this.logger.logForWork(work, 'Starting finalizer');
+      this.logger.logOutsideWork(work, 'Starting finalizer');
       runnable.workhorse = this;
       return runnable.onChildrenDone(work)
       .then((result: any) => {
-        this.logger.logForWork(work, 'Finalizer succeeded');
+        this.logger.logOutsideWork(work, 'Finalizer succeeded');
         work.finalizerResult.end(null, result);
       })
       .catch((err: Error) => {
-        this.logger.logForWork(work, 'Finalizer failed', err);
+        this.logger.logOutsideWork(work, 'Finalizer failed', err);
         work.finalizerResult.end(err);
       });
     })
@@ -211,7 +212,7 @@ export default class Workhorse {
     })
     .then(() => {
       let promises = children.map((work: Work) => {
-        this.logger.logForWork(parent, `Routing child work: ${work.workLoadHref}:${work.id}`);
+        this.logger.logOutsideWork(parent, `Routing child work: ${work.workLoadHref}:${work.id}`);
         return this.router.route({ workID: work.id });
       });
       return Promise.all(promises);

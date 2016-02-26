@@ -9,16 +9,9 @@ export default class ConsoleLogger implements Logger {
   level: LogLevel;
 
   log (message: string, level?: LogLevel|Error) {
-    let formattedMessage = message;
     let err;
-    if (level instanceof Error) {
-      err = <Error>level;
-      formattedMessage += `: ${err.message}`;
-      level = LogLevel.Error;
-    }
-    if (!level) {
-      level = LogLevel.Info;
-    }
+    [level, err] = ConsoleLogger.parseLevel(level);
+    let formattedMessage = ConsoleLogger.formatMessage(message, level);
 
     // Ignore
     if (this.level && this.level < level) {
@@ -27,13 +20,9 @@ export default class ConsoleLogger implements Logger {
 
     switch(level) {
       case LogLevel.Debug:
-        // Ignore
-        break;
       case LogLevel.Info:
-        console.log(formattedMessage);
-        break;
       case LogLevel.Warn:
-        console.log(`WARN: ${formattedMessage}`);
+        console.log(formattedMessage);
         break;
       case LogLevel.Error:
         console.error(formattedMessage);
@@ -43,11 +32,51 @@ export default class ConsoleLogger implements Logger {
     }
   }
 
-  logForWork (work: Work, message: string, level?: LogLevel|Error) {
+  logInsideWork (work: Work, message: string, level?: LogLevel|Error) {
     return this.log(`${message}: ${work.workLoadHref}:${work.id}`, level);
+  }
+
+  logOutsideWork (work: Work, message: string, level?: LogLevel|Error) {
+    return this.log(`${message}: ${work.workLoadHref}:${work.id}`, level);
+  }
+
+  workEnded () {
   }
 
   flush (): Promise<any> {
     return Promise.resolve();
+  }
+
+  static parseLevel(level?: LogLevel|Error) {
+    let err;
+    if (level instanceof Error) {
+      err = <Error>level;
+      level = LogLevel.Error;
+    }
+    if (!level) {
+      level = LogLevel.Info;
+    }
+    return [level, err];
+  }
+
+  static formatMessage(message: string, level?: LogLevel|Error) {
+    let err;
+    [level, err] = ConsoleLogger.parseLevel(level);
+    let formattedMessage = message;
+    if (err) {
+      formattedMessage += `: ${err.message}`;
+    }
+
+    switch(level) {
+      case LogLevel.Debug:
+      case LogLevel.Info:
+        return formattedMessage;
+      case LogLevel.Warn:
+        return `WARN: ${formattedMessage}`
+      case LogLevel.Error:
+        return `ERROR: ${formattedMessage}`;
+      default:
+        throw new Error(`Unsupported log level: ${level}`);
+    }
   }
 }
