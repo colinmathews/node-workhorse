@@ -42,7 +42,7 @@ describe('Family Tree', () => {
       return subject.run(`${baseWorkPath}parent`, { name: 'Colin', kids: 3, grandKids: 2 })
       .then((work: Work) => {
         assert.isNotNull(work.result);
-        return work.prettyPrint(subject);
+        return work.deep(subject);
       })
       .then((pretty) => {
         assert.lengthOf(pretty.children, 3);

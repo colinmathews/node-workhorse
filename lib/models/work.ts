@@ -20,7 +20,7 @@ export default class Work {
     this.input = input;
   }
 
-  prettyPrint (workhorse: Workhorse): Promise<any> {
+  deep(workhorse: Workhorse): Promise<any> {
     let json = clone(this);
     delete json.finishedChildrenIDs;
 
@@ -28,7 +28,7 @@ export default class Work {
     .then((children: Work[]) => {
       delete json.childrenIDs;
       let promises = children.map((child) => {
-        return child.prettyPrint(workhorse);
+        return child.deep(workhorse);
       });
       return Promise.all(promises)
       .then((children) => {
