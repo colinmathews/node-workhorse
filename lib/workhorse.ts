@@ -6,6 +6,7 @@ import Router from './interfaces/router';
 import Runnable from './interfaces/runnable';
 import Config from './models/config';
 import Response from './models/response';
+import Route from './models/route';
 import Work from './models/work';
 import WorkResult from './models/work-result';
 import LogLevel from './models/log-level';
@@ -53,6 +54,18 @@ export default class Workhorse {
     let obj = <Logger>this.config.logger;
     obj.workhorse = this;
     return obj;
+  }
+
+  route(data:Work|string, input?: any): Promise<Work> {
+    let work;
+    return this.normalizeRunData(data, input)
+    .then((result) => {
+      work = result;
+      return this.router.route(new Route({ workID: work.id }));
+    })
+    .then((result) => {
+      return work;
+    });
   }
 
   run(data: Work|string, input?: any): Promise<Work> {
