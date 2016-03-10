@@ -9,16 +9,14 @@ export default class ConsoleLogger implements Logger {
   level: LogLevel;
 
   log(message: string, level?: LogLevel|Error) {
-    let err;
-    [level, err] = ConsoleLogger.parseLevel(level);
-    let formattedMessage = ConsoleLogger.formatMessage(message, level);
+    let [formattedMessage, parsedLevel] = ConsoleLogger.formatMessage(message, level);
 
     // Ignore
-    if (this.level && this.level < level) {
+    if (this.level && this.level < parsedLevel) {
       return;
     }
 
-    switch(level) {
+    switch (parsedLevel) {
       case LogLevel.Debug:
       case LogLevel.Info:
       case LogLevel.Warn:
@@ -28,7 +26,7 @@ export default class ConsoleLogger implements Logger {
         console.error(formattedMessage);
         break;
       default:
-        throw new Error(`Unsupported log level: ${level}`);
+        throw new Error(`Unsupported log level: ${parsedLevel}`);
     }
   }
 
@@ -48,7 +46,7 @@ export default class ConsoleLogger implements Logger {
     return Promise.resolve();
   }
 
-  static parseLevel(level?: LogLevel|Error) {
+  static parseLevel(level?: LogLevel|Error): [LogLevel, Error] {
     let err;
     if (level instanceof Error) {
       err = <Error>level;
@@ -57,27 +55,34 @@ export default class ConsoleLogger implements Logger {
     if (!level) {
       level = LogLevel.Info;
     }
-    return [level, err];
+    return [<LogLevel>level, err];
   }
 
-  static formatMessage(message: string, level?: LogLevel|Error) {
-    let err;
-    [level, err] = ConsoleLogger.parseLevel(level);
+  static formatError(error:Error): string {
+    return error.stack;
+  }
+
+  static formatMessage(message: string, level?: LogLevel|Error): [string, LogLevel] {
+    let [parsedLevel, err] = ConsoleLogger.parseLevel(level);
     let formattedMessage = message;
     if (err) {
-      formattedMessage += `: ${err.message}`;
+      formattedMessage += `: ${ConsoleLogger.formatError(err)}`;
     }
 
-    switch(level) {
+    switch (parsedLevel) {
       case LogLevel.Debug:
       case LogLevel.Info:
-        return formattedMessage;
+        break;
       case LogLevel.Warn:
-        return `WARN: ${formattedMessage}`
+        formattedMessage = `WARN: ${formattedMessage}`
+        break;
       case LogLevel.Error:
-        return `ERROR: ${formattedMessage}`;
+        formattedMessage = `ERROR: ${formattedMessage}`;
+        break;
       default:
-        throw new Error(`Unsupported log level: ${level}`);
+        throw new Error(`Unsupported log level: ${parsedLevel}`);
     }
+
+    return [formattedMessage, parsedLevel];
   }
 }

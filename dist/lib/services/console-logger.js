@@ -5,14 +5,12 @@ var ConsoleLogger = (function () {
     function ConsoleLogger() {
     }
     ConsoleLogger.prototype.log = function (message, level) {
-        var err;
-        _a = ConsoleLogger.parseLevel(level), level = _a[0], err = _a[1];
-        var formattedMessage = ConsoleLogger.formatMessage(message, level);
+        var _a = ConsoleLogger.formatMessage(message, level), formattedMessage = _a[0], parsedLevel = _a[1];
         // Ignore
-        if (this.level && this.level < level) {
+        if (this.level && this.level < parsedLevel) {
             return;
         }
-        switch (level) {
+        switch (parsedLevel) {
             case log_level_1.default.Debug:
             case log_level_1.default.Info:
             case log_level_1.default.Warn:
@@ -22,9 +20,8 @@ var ConsoleLogger = (function () {
                 console.error(formattedMessage);
                 break;
             default:
-                throw new Error("Unsupported log level: " + level);
+                throw new Error("Unsupported log level: " + parsedLevel);
         }
-        var _a;
     };
     ConsoleLogger.prototype.logInsideWork = function (work, message, level) {
         return this.log(message + ": " + work.workLoadHref + ":" + work.id, level);
@@ -49,25 +46,29 @@ var ConsoleLogger = (function () {
         }
         return [level, err];
     };
+    ConsoleLogger.formatError = function (error) {
+        return error.stack;
+    };
     ConsoleLogger.formatMessage = function (message, level) {
-        var err;
-        _a = ConsoleLogger.parseLevel(level), level = _a[0], err = _a[1];
+        var _a = ConsoleLogger.parseLevel(level), parsedLevel = _a[0], err = _a[1];
         var formattedMessage = message;
         if (err) {
-            formattedMessage += ": " + err.message;
+            formattedMessage += ": " + ConsoleLogger.formatError(err);
         }
-        switch (level) {
+        switch (parsedLevel) {
             case log_level_1.default.Debug:
             case log_level_1.default.Info:
-                return formattedMessage;
+                break;
             case log_level_1.default.Warn:
-                return "WARN: " + formattedMessage;
+                formattedMessage = "WARN: " + formattedMessage;
+                break;
             case log_level_1.default.Error:
-                return "ERROR: " + formattedMessage;
+                formattedMessage = "ERROR: " + formattedMessage;
+                break;
             default:
-                throw new Error("Unsupported log level: " + level);
+                throw new Error("Unsupported log level: " + parsedLevel);
         }
-        var _a;
+        return [formattedMessage, parsedLevel];
     };
     return ConsoleLogger;
 }());

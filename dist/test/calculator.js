@@ -9,7 +9,7 @@ describe('Calculator', function () {
     var baseWorkPath = __dirname + "/test-work/";
     beforeEach(function () {
         subject = new index_1.Workhorse();
-        subject.logger.level = index_1.LogLevel.None;
+        //todo: subject.logger.level = LogLevel.None;
     });
     describe('#run', function () {
         it('should add two numbers', function () {

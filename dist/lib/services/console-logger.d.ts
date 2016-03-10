@@ -10,6 +10,7 @@ export default class ConsoleLogger implements Logger {
     logOutsideWork(work: Work, message: string, level?: LogLevel | Error): void;
     workEnded(): Promise<any>;
     flush(): Promise<any>;
-    static parseLevel(level?: LogLevel | Error): any[];
-    static formatMessage(message: string, level?: LogLevel | Error): string;
+    static parseLevel(level?: LogLevel | Error): [LogLevel, Error];
+    static formatError(error: Error): string;
+    static formatMessage(message: string, level?: LogLevel | Error): [string, LogLevel];
 }
