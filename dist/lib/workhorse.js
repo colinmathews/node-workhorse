@@ -1,6 +1,7 @@
 "use strict";
 var es6_promise_1 = require('es6-promise');
 var config_1 = require('./models/config');
+var route_1 = require('./models/route');
 var work_1 = require('./models/work');
 var work_result_1 = require('./models/work-result');
 var dynamic_loader_1 = require('./util/dynamic-loader');
@@ -60,6 +61,18 @@ var Workhorse = (function () {
         enumerable: true,
         configurable: true
     });
+    Workhorse.prototype.route = function (data, input) {
+        var _this = this;
+        var work;
+        return this.normalizeRunData(data, input)
+            .then(function (result) {
+            work = result;
+            return _this.router.route(new route_1.default({ workID: work.id }));
+        })
+            .then(function (result) {
+            return work;
+        });
+    };
     Workhorse.prototype.run = function (data, input) {
         var _this = this;
         var work;

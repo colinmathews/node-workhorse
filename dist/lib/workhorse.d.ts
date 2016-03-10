@@ -12,6 +12,7 @@ export default class Workhorse {
     loader: WorkLoader;
     router: Router;
     logger: Logger;
+    route(data: Work | string, input?: any): Promise<Work>;
     run(data: Work | string, input?: any): Promise<Work>;
     runFinalizer(work: Work): Promise<Work>;
     private normalizeRunData(data, input?);
