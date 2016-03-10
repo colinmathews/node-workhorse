@@ -1,5 +1,2 @@
 # node-workhorse
-A state-machine of sorts to delegate work efficiently and with resilience.
-
-## Developer Setup
-See the [workflow here](./docs/dev-setup.md).
+Delegate long-running work with resilience and opportunities for parallelism. 
