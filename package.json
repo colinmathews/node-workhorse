@@ -1,6 +1,6 @@
 {
   "name": "node-workhorse",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Delegate long-running work with resilience and opportunities for parallelism.",
   "dependencies": {
     "es6-promise": "^3.1.2",
