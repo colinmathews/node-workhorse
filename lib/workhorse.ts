@@ -26,6 +26,10 @@ export default class Workhorse {
     if (typeof(config.logger) === 'string') {
       config.logger = this.loadService(<string>config.logger);
     }
+    (<WorkLoader>config.workLoader).workhorse = this;
+    (<StateManager>config.stateManager).workhorse = this;
+    (<Router>config.router).workhorse = this;
+    (<Logger>config.logger).workhorse = this;
   }
 
   private loadService(serviceHref: string) {

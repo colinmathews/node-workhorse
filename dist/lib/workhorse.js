@@ -21,6 +21,10 @@ var Workhorse = (function () {
         if (typeof (config.logger) === 'string') {
             config.logger = this.loadService(config.logger);
         }
+        config.workLoader.workhorse = this;
+        config.stateManager.workhorse = this;
+        config.router.workhorse = this;
+        config.logger.workhorse = this;
     }
     Workhorse.prototype.loadService = function (serviceHref) {
         return dynamic_loader_1.instantiateFromPath(serviceHref);
