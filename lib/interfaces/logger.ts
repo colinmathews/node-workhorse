@@ -10,6 +10,7 @@ interface Logger {
   logInsideWork: (work: Work, message: string, level?: LogLevel | Error) => void;
   logOutsideWork: (work: Work, message: string, level?: LogLevel | Error) => void;
   workEnded: (work: Work) => Promise<any>;
+  finalizerRan: (work: Work) => Promise<any>;
   flush: () => Promise<any>;
 }
 

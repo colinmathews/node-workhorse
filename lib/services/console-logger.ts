@@ -42,6 +42,10 @@ export default class ConsoleLogger implements Logger {
     return Promise.resolve();
   }
 
+  finalizerRan(): Promise<any> {
+    return Promise.resolve();
+  }
+
   flush(): Promise<any> {
     return Promise.resolve();
   }

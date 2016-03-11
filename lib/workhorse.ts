@@ -214,6 +214,9 @@ export default class Workhorse {
       });
     })
     .then(() => {
+      return this.logger.finalizerRan(work);
+    })
+    .then(() => {
       return this.state.save(work);
     });
   }
