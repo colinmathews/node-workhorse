@@ -161,6 +161,7 @@ var Workhorse = (function () {
         });
     };
     Workhorse.prototype.onEnded = function (work) {
+        // TODO: Child work on lambda isn't running finalizer?
         var _this = this;
         return this.logger.workEnded(work)
             .then(function () {
@@ -178,7 +179,11 @@ var Workhorse = (function () {
             })
                 .then(function () {
                 if (isDone) {
+                    console.log('todo: checking finalizer');
                     return _this.checkRunFinalizer(parent);
+                }
+                else {
+                    console.log('todo: NOT checking finalizer');
                 }
             });
         });

@@ -13,4 +13,5 @@ export default class Work {
     runnable: Runnable;
     constructor(workLoadHref?: string, input?: any);
     deep(workhorse: Workhorse): Promise<any>;
+    copy(): Work;
 }

@@ -1,5 +1,6 @@
 "use strict";
 var clone_1 = require('../util/clone');
+var clone_2 = require('../util/clone');
 var Work = (function () {
     function Work(workLoadHref, input) {
         this.childrenIDs = [];
@@ -22,6 +23,11 @@ var Work = (function () {
                 return json;
             });
         });
+    };
+    Work.prototype.copy = function () {
+        var copy = new Work();
+        clone_2.cloneInto(this, copy);
+        return copy;
     };
     return Work;
 }());

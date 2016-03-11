@@ -2,6 +2,7 @@ import Runnable from '../interfaces/runnable';
 import WorkResult from './work-result';
 import Workhorse from '../workhorse';
 import clone from '../util/clone';
+import { cloneInto } from '../util/clone';
 
 export default class Work {
   id: string;
@@ -36,5 +37,11 @@ export default class Work {
         return json;
       });
     });
+  }
+
+  copy(): Work {
+    let copy = new Work();
+    cloneInto(this, copy);
+    return copy;
   }
 }
