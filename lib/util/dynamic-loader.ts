@@ -30,8 +30,18 @@ export function instantiate(oClass){
   return instance;
 }
 
+// TODO: Turn this parsing into a routine/model
 export function instantiateFromPath(href:string) {
+  let resolveFromWorkingDir = false;
+  let workingDirProtocol = 'working://';
+  if (href.indexOf(workingDirProtocol) === 0) {
+    resolveFromWorkingDir = true;
+    href = href.substring(workingDirProtocol.length);
+  }
   let [ modulePath, className ] = href.split(':');
+  if (resolveFromWorkingDir) {
+    modulePath = path.resolve(modulePath);
+  }
   if (!modulePath) {
     modulePath = path.resolve(__dirname, '../../index');
   }
