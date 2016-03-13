@@ -173,15 +173,12 @@ var Workhorse = (function () {
                 return;
             }
             var parent;
-            var isDone;
             return _this.state.load(work.parentID)
                 .then(function (result) {
                 parent = result;
-                parent.finishedChildrenIDs.push(work.id);
-                isDone = parent.finishedChildrenIDs.length === parent.childrenIDs.length;
-                return _this.state.save(parent);
+                return _this.state.childWorkFinished(work, parent);
             })
-                .then(function () {
+                .then(function (isDone) {
                 if (isDone) {
                     return _this.checkRunFinalizer(parent);
                 }

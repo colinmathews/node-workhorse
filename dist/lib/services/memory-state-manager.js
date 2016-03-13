@@ -33,6 +33,14 @@ var MemoryStateManager = (function () {
         });
         return es6_promise_1.Promise.all(promises);
     };
+    MemoryStateManager.prototype.childWorkFinished = function (work, parent) {
+        parent.finishedChildrenIDs.push(work.id);
+        var isDone = parent.finishedChildrenIDs.length === parent.childrenIDs.length;
+        return this.save(parent)
+            .then(function () {
+            return isDone;
+        });
+    };
     return MemoryStateManager;
 }());
 Object.defineProperty(exports, "__esModule", { value: true });

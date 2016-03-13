@@ -38,4 +38,13 @@ export default class MemoryStateManager implements StateManager {
     });
     return Promise.all(promises);
   }
+
+  childWorkFinished(work: Work, parent: Work): Promise<boolean> {
+    parent.finishedChildrenIDs.push(work.id);
+    let isDone = parent.finishedChildrenIDs.length === parent.childrenIDs.length;
+    return this.save(parent)
+    .then(() => {
+      return isDone;
+    });
+  }
 }

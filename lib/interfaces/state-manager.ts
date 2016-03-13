@@ -8,6 +8,7 @@ interface StateManager {
   saveAll: (work: Work[]) => Promise<any>;
   load: (id: string) => Promise<Work>;
   loadAll: (ids: string[]) => Promise<Work[]>;
+  childWorkFinished: (work: Work, parent:Work) => Promise<boolean>;
 }
 
 export default StateManager
