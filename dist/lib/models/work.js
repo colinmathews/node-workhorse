@@ -7,6 +7,7 @@ var Work = (function () {
         this.finishedChildrenIDs = [];
         this.workLoadHref = workLoadHref;
         this.input = input;
+        this.ancestorLevel = 0;
     }
     Work.prototype.deep = function (workhorse) {
         var json = clone_1.default(this);

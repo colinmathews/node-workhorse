@@ -1,8 +1,10 @@
 "use strict";
+var DEFAULT_MAX_ANCESTOR_LEVEL = 30;
 var Config = (function () {
     function Config(props) {
         var _this = this;
         if (props === void 0) { props = {}; }
+        this.maxAncestorLevelAllowed = DEFAULT_MAX_ANCESTOR_LEVEL;
         Object.keys(props).forEach(function (key) {
             _this[key] = props[key];
         });

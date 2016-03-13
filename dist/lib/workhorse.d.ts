@@ -21,5 +21,6 @@ export default class Workhorse {
     private onEnded(work);
     private checkRunFinalizer(work);
     private runFinalizerWork(work, runnable);
+    private isAllowedToSpawnChildren(work, childrenToSpawn?);
     private spawnChildren(parent, children);
 }

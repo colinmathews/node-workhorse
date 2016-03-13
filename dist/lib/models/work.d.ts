@@ -10,6 +10,7 @@ export default class Work {
     parentID: string;
     childrenIDs: string[];
     finishedChildrenIDs: string[];
+    ancestorLevel: number;
     runnable: Runnable;
     constructor(workLoadHref?: string, input?: any);
     deep(workhorse: Workhorse): Promise<any>;

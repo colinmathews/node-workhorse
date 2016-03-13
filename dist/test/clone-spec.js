@@ -35,5 +35,55 @@ describe('Clone', function () {
         chai_1.assert.equal(dest.input.b[0], source.input.b[0]);
         chai_1.assert.notEqual(dest.input.c, source.input.c);
     });
+    it('should clone error objects', function () {
+        var source = new Error('Hi');
+        var dest = clone_1.default(source);
+        chai_1.assert.notEqual(dest, source);
+        chai_1.assert.equal(dest.message, source.message);
+        chai_1.assert.equal(dest.stack, source.stack);
+    });
+    it('should clone dates', function () {
+        var source = { x: new Date() };
+        var dest = clone_1.default(source);
+        chai_1.assert.notEqual(dest, source);
+        chai_1.assert.instanceOf(dest.x, Date);
+        chai_1.assert.notEqual(dest.x, source.x);
+        chai_1.assert.equal(dest.x.valueOf(), source.x.valueOf());
+    });
+    it('should clone regular expressions', function () {
+        var source = { x: /blah/i };
+        var dest = clone_1.default(source);
+        chai_1.assert.notEqual(dest, source);
+        chai_1.assert.instanceOf(dest.x, RegExp);
+        chai_1.assert.notEqual(dest.x, source.x);
+        chai_1.assert.isTrue(dest.x.test('Blah'));
+    });
+    it('should deep clone', function () {
+        var source = {
+            one: [1, {
+                    two: [{
+                            date: new Date()
+                        }]
+                }],
+            three: {
+                reg: /hi/
+            },
+            four: true
+        };
+        var dest = clone_1.default(source);
+        chai_1.assert.notEqual(dest, source);
+        chai_1.assert.lengthOf(dest.one, source.one.length);
+        chai_1.assert.instanceOf(dest.one[1].two[0].date, Date);
+        chai_1.assert.instanceOf(dest.three.reg, RegExp);
+        chai_1.assert.isTrue(dest.four === true);
+    });
+    it('should prevent cloning of circlular references', function () {
+        var source = {
+            a: []
+        };
+        source.a.push(source);
+        var fn = function () { return clone_1.default(source); };
+        chai_1.assert.throws(fn);
+    });
 });
 //# sourceMappingURL=clone-spec.js.map

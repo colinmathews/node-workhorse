@@ -13,12 +13,14 @@ export default class Work {
   parentID: string;
   childrenIDs: string[] = [];
   finishedChildrenIDs: string[] = [];
+  ancestorLevel: number;
 
   runnable: Runnable;
 
   constructor(workLoadHref?: string, input?: any) {
     this.workLoadHref = workLoadHref;
     this.input = input;
+    this.ancestorLevel = 0;
   }
 
   deep(workhorse: Workhorse): Promise<any> {

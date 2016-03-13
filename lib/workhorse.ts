@@ -130,6 +130,11 @@ export default class Workhorse {
         this.logger.logOutsideWork(work, 'Work succeeded');
         work.result.end(null, response.result);
         childrenToSpawn = response.childWork;
+        if (!this.isAllowedToSpawnChildren(work, childrenToSpawn)) {
+          childrenToSpawn = [];
+          throw new Error('Recursion protection: cannot create child work because an ancestor level of ' +
+            `${work.ancestorLevel + 1} exceeds the configured value of ${this.config.maxAncestorLevelAllowed}`);
+        }
       })
       .catch((err: Error) => {
         this.logger.logOutsideWork(work, 'Work failed', err);
@@ -221,9 +226,17 @@ export default class Workhorse {
     });
   }
 
+  private isAllowedToSpawnChildren(work: Work, childrenToSpawn: Work[] = []) {
+    if (childrenToSpawn.length > 0 && work.ancestorLevel >= this.config.maxAncestorLevelAllowed) {
+      return false;
+    }
+    return true;
+  }
+
   private spawnChildren(parent: Work, children: Work[]): Promise<any> {
     children.forEach((child) => {
       child.parentID = parent.id;
+      child.ancestorLevel = parent.ancestorLevel + 1;
     });
     return this.state.saveAll(children)
     .then(() => {

@@ -7,5 +7,6 @@ export default class Config {
     stateManager: string | StateManager;
     router: string | Router;
     logger: string | Logger;
+    maxAncestorLevelAllowed: number;
     constructor(props?: any);
 }
