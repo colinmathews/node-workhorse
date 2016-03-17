@@ -2,6 +2,7 @@
 var fs = require('fs');
 var path = require('path');
 var deep_dots_1 = require('./deep-dots');
+var workload_href_meta_1 = require('../models/workload-href-meta');
 var _loadClass = function (modulePath, className) {
     var oClass = require(modulePath);
     if (!oClass) {
@@ -29,22 +30,9 @@ function instantiate(oClass) {
     return instance;
 }
 exports.instantiate = instantiate;
-// TODO: Turn this parsing into a routine/model
 function instantiateFromPath(href) {
-    var resolveFromWorkingDir = false;
-    var workingDirProtocol = 'working://';
-    if (href.indexOf(workingDirProtocol) === 0) {
-        resolveFromWorkingDir = true;
-        href = href.substring(workingDirProtocol.length);
-    }
-    var _a = href.split(':'), modulePath = _a[0], className = _a[1];
-    if (resolveFromWorkingDir) {
-        modulePath = path.resolve(modulePath);
-    }
-    if (!modulePath) {
-        modulePath = path.resolve(__dirname, '../../index');
-    }
-    var oClass = _loadClass(modulePath, className);
+    var meta = workload_href_meta_1.default.parse(href);
+    var oClass = _loadClass(meta.modulePath, meta.className);
     var instance = instantiate(oClass);
     if (!instance) {
         throw new Error("Expected " + href + " to have a prototype");
