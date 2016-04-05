@@ -13,6 +13,6 @@ export default class Work {
     ancestorLevel: number;
     runnable: Runnable;
     constructor(workLoadHref?: string, input?: any);
-    deep(workhorse: Workhorse): Promise<any>;
+    deep(workhorse: Workhorse, levelsDeep?: number): Promise<any>;
     copy(): Work;
 }

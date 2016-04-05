@@ -23,21 +23,24 @@ export default class Work {
     this.ancestorLevel = 0;
   }
 
-  deep(workhorse: Workhorse): Promise<any> {
+  // TODO: Test levelsDeep
+  deep(workhorse: Workhorse, levelsDeep:number = Infinity): Promise<any> {
     let json = clone(this);
     delete json.finishedChildrenIDs;
 
     return workhorse.state.loadAll(this.childrenIDs)
     .then((children: Work[]) => {
       delete json.childrenIDs;
-      let promises = children.map((child) => {
-        return child.deep(workhorse);
-      });
-      return Promise.all(promises)
-      .then((children) => {
-        json.children = children;
-        return json;
-      });
+      if (levelsDeep > 0) {
+        let promises = children.map((child) => {
+          return child.deep(workhorse, levelsDeep - 1);
+        });
+        return Promise.all(promises)
+        .then((children) => {
+          json.children = children;
+          return json;
+        }); 
+      }
     });
   }
 

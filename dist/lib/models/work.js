@@ -9,20 +9,24 @@ var Work = (function () {
         this.input = input;
         this.ancestorLevel = 0;
     }
-    Work.prototype.deep = function (workhorse) {
+    // TODO: Test levelsDeep
+    Work.prototype.deep = function (workhorse, levelsDeep) {
+        if (levelsDeep === void 0) { levelsDeep = Infinity; }
         var json = clone_1.default(this);
         delete json.finishedChildrenIDs;
         return workhorse.state.loadAll(this.childrenIDs)
             .then(function (children) {
             delete json.childrenIDs;
-            var promises = children.map(function (child) {
-                return child.deep(workhorse);
-            });
-            return Promise.all(promises)
-                .then(function (children) {
-                json.children = children;
-                return json;
-            });
+            if (levelsDeep > 0) {
+                var promises = children.map(function (child) {
+                    return child.deep(workhorse, levelsDeep - 1);
+                });
+                return Promise.all(promises)
+                    .then(function (children) {
+                    json.children = children;
+                    return json;
+                });
+            }
         });
     };
     Work.prototype.copy = function () {
