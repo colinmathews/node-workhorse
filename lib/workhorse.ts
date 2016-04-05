@@ -157,22 +157,31 @@ export default class Workhorse {
       return this.logger.flush();
     })
     .then(() => {
-      return this.onEnded(work);
+      return this.onEnded(work, 'run');
     })
     .then(() => {
       return work;
     });
   }
 
-  private onEnded(work: Work): Promise<any> {
-    return this.logger.workEnded(work)
+  private onEnded(work: Work, endType: string): Promise<any> {
+    return Promise.resolve()
+    .then(() => {
+      if (endType === 'run') {
+        return this.logger.workEnded(work); 
+      }
+    })
     .then(() => {
       if (!work.parentID) {
         return;
       }
+
+      // If this work has children, we have to wait until they're done
+      if (endType === 'run' && work.childrenIDs.length > 0) {
+        return;
+      }
       
       let parent: Work;
-
       return this.state.load(work.parentID)
       .then((result: Work) => {
         parent = result;
@@ -191,7 +200,7 @@ export default class Workhorse {
     .then((runnable: Runnable) => {
       if (!runnable.onChildrenDone) {
         this.logger.logOutsideWork(work, 'All children are done, but no finalizer is defined');
-        return;
+        return this.onEnded(work, 'children-done-no-finalizer');
       }
       this.logger.logOutsideWork(work, `Routing finalizer`);
       return this.router.routeFinalizer({ workID: work.id });
@@ -220,6 +229,9 @@ export default class Workhorse {
     })
     .then(() => {
       return this.state.save(work);
+    })
+    .then(() => {
+      return this.onEnded(work, 'finalizer');
     });
   }
 

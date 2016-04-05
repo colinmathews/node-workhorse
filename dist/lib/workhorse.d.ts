@@ -18,7 +18,7 @@ export default class Workhorse {
     private normalizeRunData(data, input?);
     private runWork(work, runnable);
     private afterRun(work, childrenToSpawn);
-    private onEnded(work);
+    private onEnded(work, endType);
     private checkRunFinalizer(work);
     private runFinalizerWork(work, runnable);
     private isAllowedToSpawnChildren(work, childrenToSpawn?);
