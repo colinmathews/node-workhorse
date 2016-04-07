@@ -1,6 +1,6 @@
 {
   "name": "node-workhorse",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Flexible framework for executing tasks.",
   "dependencies": {
     "es6-promise": "^3.1.2",
