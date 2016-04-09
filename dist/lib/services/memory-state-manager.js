@@ -22,6 +22,21 @@ var MemoryStateManager = (function () {
             return null;
         });
     };
+    MemoryStateManager.prototype.saveWorkStarted = function (work) {
+        return this.save(work);
+    };
+    MemoryStateManager.prototype.saveWorkEnded = function (work) {
+        return this.save(work);
+    };
+    MemoryStateManager.prototype.saveFinalizerStarted = function (work) {
+        return this.save(work);
+    };
+    MemoryStateManager.prototype.saveFinalizerEnded = function (work) {
+        return this.save(work);
+    };
+    MemoryStateManager.prototype.saveCreatedChildren = function (work) {
+        return this.save(work);
+    };
     MemoryStateManager.prototype.load = function (id) {
         var work = stateMap[id];
         return es6_promise_1.Promise.resolve(work);

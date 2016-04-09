@@ -27,6 +27,26 @@ export default class MemoryStateManager implements StateManager {
     });
   }
 
+  saveWorkStarted(work: Work): Promise<any> {
+    return this.save(work);
+  }
+
+  saveWorkEnded(work: Work): Promise<any> {
+    return this.save(work);
+  }
+
+  saveFinalizerStarted(work: Work): Promise<any> {
+    return this.save(work);
+  }
+
+  saveFinalizerEnded(work: Work): Promise<any> {
+    return this.save(work);
+  }
+
+  saveCreatedChildren(work: Work): Promise<any> {
+    return this.save(work);
+  }
+
   load (id: string): Promise<Work> {
     let work = stateMap[id];
     return Promise.resolve(work);

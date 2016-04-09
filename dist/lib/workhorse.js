@@ -124,7 +124,7 @@ var Workhorse = (function () {
         var childrenToSpawn;
         work.result = new work_result_1.default();
         work.result.start();
-        return this.state.save(work)
+        return this.state.saveWorkStarted(work)
             .then(function () {
             _this.logger.logOutsideWork(work, 'Running work');
             return runnable.run(work)
@@ -149,7 +149,7 @@ var Workhorse = (function () {
     };
     Workhorse.prototype.afterRun = function (work, childrenToSpawn) {
         var _this = this;
-        return this.state.save(work)
+        return this.state.saveWorkEnded(work)
             .then(function () {
             if (childrenToSpawn) {
                 return _this.spawnChildren(work, childrenToSpawn);
@@ -210,7 +210,7 @@ var Workhorse = (function () {
         var _this = this;
         work.finalizerResult = new work_result_1.default();
         work.finalizerResult.start();
-        return this.state.save(work)
+        return this.state.saveFinalizerStarted(work)
             .then(function () {
             _this.logger.logOutsideWork(work, 'Starting finalizer');
             runnable.workhorse = _this;
@@ -228,7 +228,7 @@ var Workhorse = (function () {
             return _this.logger.finalizerRan(work);
         })
             .then(function () {
-            return _this.state.save(work);
+            return _this.state.saveFinalizerEnded(work);
         })
             .then(function () {
             return _this.onEnded(work, 'finalizer');
@@ -252,7 +252,7 @@ var Workhorse = (function () {
             parent.childrenIDs = children.map(function (row) {
                 return row.id;
             });
-            return _this.state.save(parent);
+            return _this.state.saveCreatedChildren(parent);
         })
             .then(function () {
             var promises = children.map(function (work) {

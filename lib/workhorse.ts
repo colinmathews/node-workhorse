@@ -122,7 +122,7 @@ export default class Workhorse {
 
     work.result = new WorkResult();
     work.result.start();
-    return this.state.save(work)
+    return this.state.saveWorkStarted(work)
     .then(() => {
       this.logger.logOutsideWork(work, 'Running work');
       return runnable.run(work)
@@ -147,7 +147,7 @@ export default class Workhorse {
   }
 
   private afterRun(work: Work, childrenToSpawn: Work[]): Promise<Work> {
-    return this.state.save(work)
+    return this.state.saveWorkEnded(work)
     .then(() => {
       if (childrenToSpawn) {
         return this.spawnChildren(work, childrenToSpawn);
@@ -210,7 +210,7 @@ export default class Workhorse {
   private runFinalizerWork(work: Work, runnable: Runnable): Promise<any> {
     work.finalizerResult = new WorkResult();
     work.finalizerResult.start();
-    return this.state.save(work)
+    return this.state.saveFinalizerStarted(work)
     .then(() => {
       this.logger.logOutsideWork(work, 'Starting finalizer');
       runnable.workhorse = this;
@@ -228,7 +228,7 @@ export default class Workhorse {
       return this.logger.finalizerRan(work);
     })
     .then(() => {
-      return this.state.save(work);
+      return this.state.saveFinalizerEnded(work);
     })
     .then(() => {
       return this.onEnded(work, 'finalizer');
@@ -252,7 +252,7 @@ export default class Workhorse {
       parent.childrenIDs = children.map((row) => {
         return row.id;
       });
-      return this.state.save(parent);
+      return this.state.saveCreatedChildren(parent);
     })
     .then(() => {
       let promises = children.map((work: Work) => {
