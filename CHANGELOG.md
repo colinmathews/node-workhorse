@@ -1,3 +1,6 @@
+## 1.0.2
+* Make state manager more refined so we can be more efficient
+
 ## 1.0.1
 * Various fixes from real-world use
 
