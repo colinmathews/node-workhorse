@@ -17,6 +17,7 @@ import MemoryRouter from './lib/services/memory-router';
 import MemoryStateManager from './lib/services/memory-state-manager';
 
 import clone from './lib/util/clone';
+import { cloneInto } from './lib/util/clone';
 import deepDots from './lib/util/deep-dots';
 
 import Workhorse from './lib/workhorse';
@@ -39,5 +40,6 @@ export {
   MemoryStateManager,
   Workhorse,
   clone,
+  cloneInto,
   deepDots
 }

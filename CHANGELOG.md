@@ -1,4 +1,4 @@
-## 1.1.1
+## 1.1.2
 * Exposing utilities.
 
 ## 1.1.0
