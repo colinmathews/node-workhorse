@@ -16,6 +16,9 @@ import FileWorkLoader from './lib/services/file-work-loader';
 import MemoryRouter from './lib/services/memory-router';
 import MemoryStateManager from './lib/services/memory-state-manager';
 
+import clone from './lib/util/clone';
+import deepDots from './lib/util/deep-dots';
+
 import Workhorse from './lib/workhorse';
 
 export {
@@ -34,5 +37,7 @@ export {
   FileWorkLoader,
   MemoryRouter,
   MemoryStateManager,
-  Workhorse
+  Workhorse,
+  clone,
+  deepDots
 }

@@ -1,3 +1,6 @@
+## 1.1.1
+* Exposing utilities.
+
 ## 1.1.0
 * Linted code which changed a few class names
 
