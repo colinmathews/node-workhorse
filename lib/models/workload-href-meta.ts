@@ -2,7 +2,7 @@ import url = require('url');
 import path = require('path');
 
 export default class WorkloadHrefMeta {
-  constructor(public modulePath:string, public className:string) {}
+  constructor(public modulePath: string, public className: string) {}
 
   static parse(href: string): WorkloadHrefMeta {
     let meta = url.parse(href);
@@ -12,7 +12,7 @@ export default class WorkloadHrefMeta {
     return this.parseSimplePath(href);
   }
 
-  private static parseWorking(meta):WorkloadHrefMeta {
+  private static parseWorking(meta: any): WorkloadHrefMeta {
     let filePath = path.join(meta.host, meta.path);
     let resolvedPath = path.resolve(filePath);
     return this.parseSimplePath(resolvedPath);

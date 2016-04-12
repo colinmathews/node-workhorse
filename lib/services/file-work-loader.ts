@@ -1,13 +1,13 @@
 import { Promise } from 'es6-promise';
-import WorkLoader from '../interfaces/work-loader'
-import Runnable from '../interfaces/runnable';
+import IWorkLoader from '../interfaces/work-loader';
+import IRunnable from '../interfaces/runnable';
 import Workhorse from '../workhorse';
-import { instantiate, instantiateFromPath } from '../util/dynamic-loader';
+import { instantiateFromPath } from '../util/dynamic-loader';
 
-export default class FileWorkLoader implements WorkLoader {
+export default class FileWorkLoader implements IWorkLoader {
   workhorse: Workhorse;
 
-  getWork (workLoadHref: string): Promise<Runnable> {
+  getWork(workLoadHref: string): Promise<IRunnable> {
     return new Promise((ok, fail) => {
       let instance = instantiateFromPath(workLoadHref);
       ok(instance);

@@ -1,9 +1,9 @@
 import { Promise } from 'es6-promise';
-import WorkLoader from './interfaces/work-loader';
-import StateManager from './interfaces/state-manager';
-import Logger from './interfaces/logger';
-import Router from './interfaces/router';
-import Runnable from './interfaces/runnable';
+import IWorkLoader from './interfaces/work-loader';
+import IStateManager from './interfaces/state-manager';
+import ILogger from './interfaces/logger';
+import IRouter from './interfaces/router';
+import IRunnable from './interfaces/runnable';
 import Config from './models/config';
 import Response from './models/response';
 import Route from './models/route';
@@ -26,10 +26,10 @@ export default class Workhorse {
     if (typeof(config.logger) === 'string') {
       config.logger = this.loadService(<string>config.logger);
     }
-    (<WorkLoader>config.workLoader).workhorse = this;
-    (<StateManager>config.stateManager).workhorse = this;
-    (<Router>config.router).workhorse = this;
-    (<Logger>config.logger).workhorse = this;
+    (<IWorkLoader>config.workLoader).workhorse = this;
+    (<IStateManager>config.stateManager).workhorse = this;
+    (<IRouter>config.router).workhorse = this;
+    (<ILogger>config.logger).workhorse = this;
   }
 
   private loadService(serviceHref: string) {
@@ -37,25 +37,25 @@ export default class Workhorse {
   }
 
   get state() {
-    let obj = <StateManager>this.config.stateManager;
+    let obj = <IStateManager>this.config.stateManager;
     obj.workhorse = this;
     return obj;
   }
 
   get loader() {
-    let obj = <WorkLoader>this.config.workLoader;
+    let obj = <IWorkLoader>this.config.workLoader;
     obj.workhorse = this;
     return obj;
   }
 
   get router() {
-    let obj = <Router>this.config.router;
+    let obj = <IRouter>this.config.router;
     obj.workhorse = this;
     return obj;
   }
 
   get logger() {
-    let obj = <Logger>this.config.logger;
+    let obj = <ILogger>this.config.logger;
     obj.workhorse = this;
     return obj;
   }
@@ -81,7 +81,7 @@ export default class Workhorse {
       this.logger.log(`Loading work: ${work.workLoadHref}:${work.id}`);
       return this.loader.getWork(work.workLoadHref)
     })
-    .then((runnable: Runnable) => {
+    .then((runnable: IRunnable) => {
       runnable.workhorse = this;
       return this.runWork(work, runnable);
     });
@@ -89,7 +89,7 @@ export default class Workhorse {
 
   runFinalizer(work: Work): Promise<Work> {
     return this.loader.getWork(work.workLoadHref)
-    .then((runnable: Runnable) => {
+    .then((runnable: IRunnable) => {
       return this.runFinalizerWork(work, runnable);
     })
     .then(() => {
@@ -117,7 +117,7 @@ export default class Workhorse {
     return Promise.resolve(work);
   }
 
-  private runWork(work: Work, runnable: Runnable): Promise<Work> {
+  private runWork(work: Work, runnable: IRunnable): Promise<Work> {
     let childrenToSpawn: Work[];
 
     work.result = new WorkResult();
@@ -197,7 +197,7 @@ export default class Workhorse {
 
   private checkRunFinalizer(work: Work): Promise<void> {
     return this.loader.getWork(work.workLoadHref)
-    .then((runnable: Runnable) => {
+      .then((runnable: IRunnable) => {
       if (!runnable.onChildrenDone) {
         this.logger.logOutsideWork(work, 'All children are done, but no finalizer is defined');
         return this.onEnded(work, 'children-done-no-finalizer');
@@ -207,7 +207,7 @@ export default class Workhorse {
     });
   }
 
-  private runFinalizerWork(work: Work, runnable: Runnable): Promise<any> {
+  private runFinalizerWork(work: Work, runnable: IRunnable): Promise<any> {
     work.finalizerResult = new WorkResult();
     work.finalizerResult.start();
     return this.state.saveFinalizerStarted(work)

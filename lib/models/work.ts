@@ -1,4 +1,4 @@
-import Runnable from '../interfaces/runnable';
+import IRunnable from '../interfaces/runnable';
 import WorkResult from './work-result';
 import Workhorse from '../workhorse';
 import clone from '../util/clone';
@@ -15,7 +15,7 @@ export default class Work {
   finishedChildrenIDs: string[] = [];
   ancestorLevel: number;
 
-  runnable: Runnable;
+  runnable: IRunnable;
 
   constructor(workLoadHref?: string, input?: any) {
     this.workLoadHref = workLoadHref;
@@ -24,7 +24,7 @@ export default class Work {
   }
 
   // TODO: Test levelsDeep
-  deep(workhorse: Workhorse, levelsDeep:number = Infinity): Promise<any> {
+  deep(workhorse: Workhorse, levelsDeep: number = Infinity): Promise<any> {
     let json = clone(this);
     delete json.finishedChildrenIDs;
 
@@ -36,10 +36,10 @@ export default class Work {
           return child.deep(workhorse, levelsDeep - 1);
         });
         return Promise.all(promises)
-        .then((children) => {
-          json.children = children;
+        .then((result) => {
+          json.children = result;
           return json;
-        }); 
+        });
       }
     });
   }

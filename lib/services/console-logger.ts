@@ -1,14 +1,54 @@
 import { Promise } from 'es6-promise';
-import Logger from '../interfaces/logger'
+import ILogger from '../interfaces/logger';
 import LogLevel from '../models/log-level';
 import Workhorse from '../workhorse';
 import Work from '../models/work';
 
-export default class ConsoleLogger implements Logger {
+export default class ConsoleLogger implements ILogger {
   workhorse: Workhorse;
   level: LogLevel;
 
-  log(message: string, level?: LogLevel|Error) {
+  static parseLevel(level?: LogLevel | Error): [LogLevel, Error] {
+    let err;
+    if (level instanceof Error) {
+      err = level as Error;
+      level = LogLevel.Error;
+    }
+    if (!level) {
+      level = LogLevel.Info;
+    }
+    return [level as LogLevel, err];
+  }
+
+  static formatError(error: Error): string {
+    return error.stack;
+  }
+
+  static formatMessage(message: string, level?: LogLevel | Error): [string, LogLevel] {
+    let [parsedLevel, err] = ConsoleLogger.parseLevel(level);
+    let formattedMessage = message;
+    if (err) {
+      formattedMessage += `: ${ConsoleLogger.formatError(err)}`;
+    }
+
+    switch (parsedLevel) {
+      case LogLevel.Debug:
+      case LogLevel.Info:
+        break;
+      case LogLevel.Warn:
+        formattedMessage = `WARN: ${formattedMessage}`;
+        break;
+      case LogLevel.Error:
+        formattedMessage = `ERROR: ${formattedMessage}`;
+        break;
+      default:
+        throw new Error(`Unsupported log level: ${parsedLevel}`);
+    }
+
+    return [formattedMessage, parsedLevel];
+  }
+
+  log(message: string, level?: LogLevel|Error): void {
     let [formattedMessage, parsedLevel] = ConsoleLogger.formatMessage(message, level);
 
     // Ignore
@@ -30,11 +70,11 @@ export default class ConsoleLogger implements Logger {
     }
   }
 
-  logInsideWork(work: Work, message: string, level?: LogLevel|Error) {
+  logInsideWork(work: Work, message: string, level?: LogLevel | Error): void {
     return this.log(`${message}: ${work.workLoadHref}:${work.id}`, level);
   }
 
-  logOutsideWork(work: Work, message: string, level?: LogLevel|Error) {
+  logOutsideWork(work: Work, message: string, level?: LogLevel | Error): void {
     return this.log(`${message}: ${work.workLoadHref}:${work.id}`, level);
   }
 
@@ -48,45 +88,5 @@ export default class ConsoleLogger implements Logger {
 
   flush(): Promise<any> {
     return Promise.resolve();
-  }
-
-  static parseLevel(level?: LogLevel|Error): [LogLevel, Error] {
-    let err;
-    if (level instanceof Error) {
-      err = <Error>level;
-      level = LogLevel.Error;
-    }
-    if (!level) {
-      level = LogLevel.Info;
-    }
-    return [<LogLevel>level, err];
-  }
-
-  static formatError(error:Error): string {
-    return error.stack;
-  }
-
-  static formatMessage(message: string, level?: LogLevel|Error): [string, LogLevel] {
-    let [parsedLevel, err] = ConsoleLogger.parseLevel(level);
-    let formattedMessage = message;
-    if (err) {
-      formattedMessage += `: ${ConsoleLogger.formatError(err)}`;
-    }
-
-    switch (parsedLevel) {
-      case LogLevel.Debug:
-      case LogLevel.Info:
-        break;
-      case LogLevel.Warn:
-        formattedMessage = `WARN: ${formattedMessage}`
-        break;
-      case LogLevel.Error:
-        formattedMessage = `ERROR: ${formattedMessage}`;
-        break;
-      default:
-        throw new Error(`Unsupported log level: ${parsedLevel}`);
-    }
-
-    return [formattedMessage, parsedLevel];
   }
 }

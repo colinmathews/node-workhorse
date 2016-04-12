@@ -2,7 +2,7 @@ import { Promise } from 'es6-promise';
 import { Work } from '../../index';
 import Workhorse from '../workhorse';
 
-interface StateManager {
+interface IStateManager {
   workhorse: Workhorse;
   save: (work: Work) => Promise<any>;
   saveAll: (work: Work[]) => Promise<any>;
@@ -13,7 +13,7 @@ interface StateManager {
   saveCreatedChildren: (work: Work) => Promise<any>;
   load: (id: string) => Promise<Work>;
   loadAll: (ids: string[]) => Promise<Work[]>;
-  childWorkFinished: (work: Work, parent:Work) => Promise<boolean>;
+  childWorkFinished: (work: Work, parent: Work) => Promise<boolean>;
 }
 
-export default StateManager
+export default IStateManager

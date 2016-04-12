@@ -1,8 +1,8 @@
 export default class Route {
-  workID:string;
+  public workID: string;
 
   constructor(props: any = {}) {
-    Object.keys(props).forEach((key) => {
+    Object.keys(props).forEach((key: string) => {
       this[key] = props[key];
     });
   }

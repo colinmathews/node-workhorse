@@ -1,5 +1,6 @@
 "use strict";
 function default_1(source, path) {
+    'use strict';
     var dots = path.split('.');
     var target = source;
     while (dots.length > 0) {

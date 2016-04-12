@@ -22,8 +22,8 @@ var Work = (function () {
                     return child.deep(workhorse, levelsDeep - 1);
                 });
                 return Promise.all(promises)
-                    .then(function (children) {
-                    json.children = children;
+                    .then(function (result) {
+                    json.children = result;
                     return json;
                 });
             }

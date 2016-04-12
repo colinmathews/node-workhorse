@@ -1,4 +1,4 @@
-import Runnable from '../interfaces/runnable';
+import IRunnable from '../interfaces/runnable';
 import WorkResult from './work-result';
 import Workhorse from '../workhorse';
 export default class Work {
@@ -11,7 +11,7 @@ export default class Work {
     childrenIDs: string[];
     finishedChildrenIDs: string[];
     ancestorLevel: number;
-    runnable: Runnable;
+    runnable: IRunnable;
     constructor(workLoadHref?: string, input?: any);
     deep(workhorse: Workhorse, levelsDeep?: number): Promise<any>;
     copy(): Work;

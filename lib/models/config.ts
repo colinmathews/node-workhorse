@@ -1,20 +1,20 @@
-import WorkLoader from '../interfaces/work-loader';
-import StateManager from '../interfaces/state-manager';
-import Router from '../interfaces/router';
-import Logger from '../interfaces/logger';
+import IWorkLoader from '../interfaces/work-loader';
+import IStateManager from '../interfaces/state-manager';
+import IRouter from '../interfaces/router';
+import ILogger from '../interfaces/logger';
 
 const DEFAULT_MAX_ANCESTOR_LEVEL: number = 30;
 
 export default class Config {
-  workLoader: string|WorkLoader;
-  stateManager: string|StateManager;
-  router: string|Router;
-  logger: string|Logger;
-  maxAncestorLevelAllowed: number;
+  public workLoader: string | IWorkLoader;
+  public stateManager: string | IStateManager;
+  public router: string | IRouter;
+  public logger: string | ILogger;
+  public maxAncestorLevelAllowed: number;
 
   constructor(props: any = {}) {
     this.maxAncestorLevelAllowed = DEFAULT_MAX_ANCESTOR_LEVEL;
-    Object.keys(props).forEach((key) => {
+    Object.keys(props).forEach((key: string) => {
       this[key] = props[key];
     });
     if (!this.workLoader) {
