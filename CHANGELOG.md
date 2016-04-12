@@ -1,3 +1,6 @@
+## 1.1.0
+* Linted code which changed a few class names
+
 ## 1.0.2
 * Make state manager more refined so we can be more efficient
 
