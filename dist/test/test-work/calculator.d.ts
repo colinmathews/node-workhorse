@@ -1,5 +1,5 @@
-import { Runnable, Workhorse, Response, Work } from '../../index';
-export default class Calculator implements Runnable {
+import { IRunnable, Workhorse, Response, Work } from '../../index';
+export default class Calculator implements IRunnable {
     errors: Error[];
     workhorse: Workhorse;
     baseWorkPath: string;

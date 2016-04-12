@@ -1,5 +1,5 @@
 import { Promise } from 'es6-promise';
-import { Runnable, Workhorse, Response, Work } from '../../index';
+import { Workhorse, Response, Work } from '../../index';
 import Parent from './parent';
 
 export default class Child extends Parent {

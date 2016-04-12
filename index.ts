@@ -1,8 +1,8 @@
-import Runnable from './lib/interfaces/runnable';
-import Logger from './lib/interfaces/logger';
-import Router from './lib/interfaces/router';
-import StateManager from './lib/interfaces/state-manager';
-import WorkLoader from './lib/interfaces/work-loader';
+import IRunnable from './lib/interfaces/runnable';
+import ILogger from './lib/interfaces/logger';
+import IRouter from './lib/interfaces/router';
+import IStateManager from './lib/interfaces/state-manager';
+import IWorkLoader from './lib/interfaces/work-loader';
 
 import Config from './lib/models/config';
 import LogLevel from './lib/models/log-level';
@@ -19,11 +19,11 @@ import MemoryStateManager from './lib/services/memory-state-manager';
 import Workhorse from './lib/workhorse';
 
 export {
-  Runnable,
-  Logger,
-  Router,
-  StateManager,
-  WorkLoader,
+  IRunnable,
+  ILogger,
+  IRouter,
+  IStateManager,
+  IWorkLoader,
   Config,
   LogLevel,
   Response,

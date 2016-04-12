@@ -1,12 +1,12 @@
-import WorkLoader from '../interfaces/work-loader';
-import StateManager from '../interfaces/state-manager';
-import Router from '../interfaces/router';
-import Logger from '../interfaces/logger';
+import IWorkLoader from '../interfaces/work-loader';
+import IStateManager from '../interfaces/state-manager';
+import IRouter from '../interfaces/router';
+import ILogger from '../interfaces/logger';
 export default class Config {
-    workLoader: string | WorkLoader;
-    stateManager: string | StateManager;
-    router: string | Router;
-    logger: string | Logger;
+    workLoader: string | IWorkLoader;
+    stateManager: string | IStateManager;
+    router: string | IRouter;
+    logger: string | ILogger;
     maxAncestorLevelAllowed: number;
     constructor(props?: any);
 }

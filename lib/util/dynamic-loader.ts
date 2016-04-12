@@ -1,5 +1,3 @@
-let fs = require('fs');
-let path = require('path');
 import deepDots from './deep-dots';
 import WorkloadHrefMeta from '../models/workload-href-meta';
 
@@ -11,13 +9,14 @@ let _loadClass = (modulePath, className) => {
   if (className) {
     oClass = deepDots(oClass, className);
     if (!oClass) {
-      throw new Error(`Could not find class ${className} in module ${modulePath}`); 
+      throw new Error(`Could not find class ${className} in module ${modulePath}`);
     }
   }
   return oClass;
 };
 
-export function instantiate(oClass){
+export function instantiate(oClass: any): any {
+  'use strict';
   if (!oClass.prototype) {
     oClass = oClass.default;
   }
@@ -31,7 +30,8 @@ export function instantiate(oClass){
   return instance;
 }
 
-export function instantiateFromPath(href:string) {
+export function instantiateFromPath(href: string): any {
+  'use strict';
   let meta = WorkloadHrefMeta.parse(href);
   let oClass = _loadClass(meta.modulePath, meta.className);
   let instance = instantiate(oClass);

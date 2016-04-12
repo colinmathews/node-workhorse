@@ -1,7 +1,7 @@
 import Runnable from './runnable';
 import Workhorse from '../workhorse';
-interface WorkLoader {
+interface IWorkLoader {
     workhorse: Workhorse;
     getWork: (path: string) => Promise<Runnable>;
 }
-export default WorkLoader;
+export default IWorkLoader;

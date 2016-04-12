@@ -1,7 +1,7 @@
-import WorkLoader from '../interfaces/work-loader';
-import Runnable from '../interfaces/runnable';
+import IWorkLoader from '../interfaces/work-loader';
+import IRunnable from '../interfaces/runnable';
 import Workhorse from '../workhorse';
-export default class FileWorkLoader implements WorkLoader {
+export default class FileWorkLoader implements IWorkLoader {
     workhorse: Workhorse;
-    getWork(workLoadHref: string): Promise<Runnable>;
+    getWork(workLoadHref: string): Promise<IRunnable>;
 }

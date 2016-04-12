@@ -1,7 +1,7 @@
 import { Promise } from 'es6-promise';
-import { Runnable, Workhorse, Response, Work } from '../../index';
+import { IRunnable, Workhorse, Response, Work } from '../../index';
 
-export default class Parent implements Runnable {
+export default class Parent implements IRunnable {
   workhorse: Workhorse;
   baseWorkPath: string = `${__dirname}/`;
 

@@ -1,11 +1,10 @@
 import { Promise } from 'es6-promise';
 import Route from '../models/route';
 import Work from '../models/work';
-import Router from '../interfaces/router';
-import StateManager from '../interfaces/state-manager';
+import IRouter from '../interfaces/router';
 import Workhorse from '../workhorse';
 
-export default class MemoryRouter implements Router {
+export default class MemoryRouter implements IRouter {
   workhorse: Workhorse;
 
   route (options: Route): Promise<any> {

@@ -4,40 +4,6 @@ var log_level_1 = require('../models/log-level');
 var ConsoleLogger = (function () {
     function ConsoleLogger() {
     }
-    ConsoleLogger.prototype.log = function (message, level) {
-        var _a = ConsoleLogger.formatMessage(message, level), formattedMessage = _a[0], parsedLevel = _a[1];
-        // Ignore
-        if (this.level && this.level < parsedLevel) {
-            return;
-        }
-        switch (parsedLevel) {
-            case log_level_1.default.Debug:
-            case log_level_1.default.Info:
-            case log_level_1.default.Warn:
-                console.log(formattedMessage);
-                break;
-            case log_level_1.default.Error:
-                console.error(formattedMessage);
-                break;
-            default:
-                throw new Error("Unsupported log level: " + parsedLevel);
-        }
-    };
-    ConsoleLogger.prototype.logInsideWork = function (work, message, level) {
-        return this.log(message + ": " + work.workLoadHref + ":" + work.id, level);
-    };
-    ConsoleLogger.prototype.logOutsideWork = function (work, message, level) {
-        return this.log(message + ": " + work.workLoadHref + ":" + work.id, level);
-    };
-    ConsoleLogger.prototype.workEnded = function () {
-        return es6_promise_1.Promise.resolve();
-    };
-    ConsoleLogger.prototype.finalizerRan = function () {
-        return es6_promise_1.Promise.resolve();
-    };
-    ConsoleLogger.prototype.flush = function () {
-        return es6_promise_1.Promise.resolve();
-    };
     ConsoleLogger.parseLevel = function (level) {
         var err;
         if (level instanceof Error) {
@@ -72,6 +38,40 @@ var ConsoleLogger = (function () {
                 throw new Error("Unsupported log level: " + parsedLevel);
         }
         return [formattedMessage, parsedLevel];
+    };
+    ConsoleLogger.prototype.log = function (message, level) {
+        var _a = ConsoleLogger.formatMessage(message, level), formattedMessage = _a[0], parsedLevel = _a[1];
+        // Ignore
+        if (this.level && this.level < parsedLevel) {
+            return;
+        }
+        switch (parsedLevel) {
+            case log_level_1.default.Debug:
+            case log_level_1.default.Info:
+            case log_level_1.default.Warn:
+                console.log(formattedMessage);
+                break;
+            case log_level_1.default.Error:
+                console.error(formattedMessage);
+                break;
+            default:
+                throw new Error("Unsupported log level: " + parsedLevel);
+        }
+    };
+    ConsoleLogger.prototype.logInsideWork = function (work, message, level) {
+        return this.log(message + ": " + work.workLoadHref + ":" + work.id, level);
+    };
+    ConsoleLogger.prototype.logOutsideWork = function (work, message, level) {
+        return this.log(message + ": " + work.workLoadHref + ":" + work.id, level);
+    };
+    ConsoleLogger.prototype.workEnded = function () {
+        return es6_promise_1.Promise.resolve();
+    };
+    ConsoleLogger.prototype.finalizerRan = function () {
+        return es6_promise_1.Promise.resolve();
+    };
+    ConsoleLogger.prototype.flush = function () {
+        return es6_promise_1.Promise.resolve();
     };
     return ConsoleLogger;
 }());

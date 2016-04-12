@@ -1,6 +1,4 @@
 "use strict";
-var fs = require('fs');
-var path = require('path');
 var deep_dots_1 = require('./deep-dots');
 var workload_href_meta_1 = require('../models/workload-href-meta');
 var _loadClass = function (modulePath, className) {
@@ -17,6 +15,7 @@ var _loadClass = function (modulePath, className) {
     return oClass;
 };
 function instantiate(oClass) {
+    'use strict';
     if (!oClass.prototype) {
         oClass = oClass.default;
     }
@@ -31,6 +30,7 @@ function instantiate(oClass) {
 }
 exports.instantiate = instantiate;
 function instantiateFromPath(href) {
+    'use strict';
     var meta = workload_href_meta_1.default.parse(href);
     var oClass = _loadClass(meta.modulePath, meta.className);
     var instance = instantiate(oClass);

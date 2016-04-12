@@ -1,4 +1,5 @@
-export default function (source, path) {
+export default function (source: any, path: string): any {
+  'use strict';
   let dots = path.split('.');
   let target = source;
   while (dots.length > 0) {

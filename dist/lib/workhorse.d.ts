@@ -1,17 +1,17 @@
-import WorkLoader from './interfaces/work-loader';
-import StateManager from './interfaces/state-manager';
-import Logger from './interfaces/logger';
-import Router from './interfaces/router';
+import IWorkLoader from './interfaces/work-loader';
+import IStateManager from './interfaces/state-manager';
+import ILogger from './interfaces/logger';
+import IRouter from './interfaces/router';
 import Config from './models/config';
 import Work from './models/work';
 export default class Workhorse {
     config: Config;
     constructor(config?: Config);
     private loadService(serviceHref);
-    state: StateManager;
-    loader: WorkLoader;
-    router: Router;
-    logger: Logger;
+    state: IStateManager;
+    loader: IWorkLoader;
+    router: IRouter;
+    logger: ILogger;
     route(data: Work | string, input?: any): Promise<Work>;
     run(data: Work | string, input?: any): Promise<Work>;
     runFinalizer(work: Work): Promise<Work>;

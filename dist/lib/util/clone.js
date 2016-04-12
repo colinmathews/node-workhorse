@@ -6,20 +6,22 @@ var primitives = ['string', 'boolean', 'number', 'function', 'undefined'];
 var MAX_DEPTH = 50;
 // http://www.bennadel.com/blog/2664-cloning-regexp-regular-expression-objects-in-javascript.htm
 function cloneRegExp(input) {
+    'use strict';
     var pattern = input.source;
-    var flags = "";
+    var flags = '';
     if (input.global) {
-        flags += "g";
+        flags += 'g';
     }
     if (input.ignoreCase) {
-        flags += "i";
+        flags += 'i';
     }
     if (input.multiline) {
-        flags += "m";
+        flags += 'm';
     }
     return (new RegExp(pattern, flags));
 }
 function clone(source, depth) {
+    'use strict';
     if (depth === void 0) { depth = 0; }
     if (depth > MAX_DEPTH) {
         throw new Error('Possible circular cloning prevented');
@@ -53,7 +55,7 @@ function clone(source, depth) {
         return dest_1;
     }
     if (type !== 'object') {
-        throw new Error("Unexpected type: " + type);
+        throw new Error('Unexpected type: ' + type);
     }
     return Object.keys(source).reduce(function (result, key) {
         result[key] = clone(source[key], depth + 1);
@@ -63,6 +65,7 @@ function clone(source, depth) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = clone;
 function cloneInto(source, dest) {
+    'use strict';
     var copy = clone(source);
     var props = Object.keys(copy);
     props.forEach(function (key) {
