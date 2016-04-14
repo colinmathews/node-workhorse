@@ -20,6 +20,9 @@ var Parent = (function () {
             };
         });
     };
+    Parent.prototype.onChildrenDone = function (work) {
+        return es6_promise_1.Promise.resolve();
+    };
     Parent.prototype.randomWait = function () {
         return new es6_promise_1.Promise(function (ok, fail) {
             var millis = Math.random() * 100;
@@ -39,9 +42,6 @@ var Parent = (function () {
             }));
         }
         return list;
-    };
-    Parent.prototype.onChildrenDone = function (work) {
-        return es6_promise_1.Promise.resolve();
     };
     return Parent;
 }());

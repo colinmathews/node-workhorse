@@ -25,11 +25,11 @@
     "clean": "rm -rf dist",
     "clean-tests": "rm -rf dist/test",
     "tsc:w": "tsc -w",
-    "pretest": "npm run build",
+    "pretest": "npm run clean && npm run tsc",
     "test": "mocha",
     "typings": "typings",
-    "lint": "tslint lib/**/*.ts test/**.*.ts index.ts",
-    "lint:q": "tslint --force lib/**/*.ts test/**.*.ts index.ts"
+    "lint": "tslint lib/**/*.ts test/**/*.ts index.ts",
+    "lint:q": "tslint --force lib/**/*.ts test/**/*.ts index.ts"
   },
   "repository": {
     "type": "git",

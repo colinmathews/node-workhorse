@@ -1,5 +1,5 @@
 import { Promise } from 'es6-promise';
-import { Workhorse, Response, Work } from '../../index';
+import { Response, Work } from '../../index';
 import Child from './child';
 
 export default class GrandChild extends Child {
@@ -10,10 +10,10 @@ export default class GrandChild extends Child {
     return this.getParentName(work)
     .then((result) => {
       parentName = result;
-      return this.workhorse.state.load(work.parentID)
+      return this.workhorse.state.load(work.parentID);
     })
     .then((parent) => {
-      return this.getParentName(parent);  
+      return this.getParentName(parent);
     })
     .then((result) => {
       grandParentName = result;

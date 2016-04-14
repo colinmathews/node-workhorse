@@ -16,16 +16,23 @@ export default class Parent implements IRunnable {
           name: work.input.name
         },
         childWork: children
-      }
+      };
     });
+  }
+
+  onChildrenDone(work: Work): Promise<any> {
+    return Promise.resolve();
   }
 
   protected randomWait(): Promise<any> {
     return new Promise((ok, fail) => {
       let millis = Math.random() * 100;
-      setTimeout(() => {
-        ok();
-      }, millis);
+      setTimeout(
+        () => {
+          ok();
+        },
+        millis
+      );
     });
   }
 
@@ -40,9 +47,5 @@ export default class Parent implements IRunnable {
       }));
     }
     return list;
-  }
-
-  onChildrenDone (work: Work): Promise<any> {
-    return Promise.resolve();
   }
 }

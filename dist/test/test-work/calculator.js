@@ -23,14 +23,14 @@ var Calculator = (function () {
             });
         });
     };
+    Calculator.prototype.onChildrenDone = function (work) {
+        return es6_promise_1.Promise.resolve();
+    };
     Calculator.prototype.createChildWork = function (input) {
         return [new index_1.Work(this.baseWorkPath + "calculator", {
                 x: input.x,
                 y: input.y
             })];
-    };
-    Calculator.prototype.onChildrenDone = function (work) {
-        return es6_promise_1.Promise.resolve();
     };
     return Calculator;
 }());

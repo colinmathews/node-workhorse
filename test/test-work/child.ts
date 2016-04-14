@@ -1,5 +1,5 @@
 import { Promise } from 'es6-promise';
-import { Workhorse, Response, Work } from '../../index';
+import { Response, Work } from '../../index';
 import Parent from './parent';
 
 export default class Child extends Parent {
@@ -25,6 +25,10 @@ export default class Child extends Parent {
     });
   }
 
+  onChildrenDone(work: Work): Promise<any> {
+    return Promise.resolve();
+  }
+
   protected getParentName (work: Work): Promise<string> {
     return this.workhorse.state.load(work.parentID)
     .then((parent) => {
@@ -35,7 +39,7 @@ export default class Child extends Parent {
     });
   }
 
-  protected createChildWork(work: Work) {
+  protected createChildWork(work: Work): Work[] {
     let count = work.input.kids;
     let list = [];
     for (let i = 0; i < count; i++) {
@@ -45,9 +49,5 @@ export default class Child extends Parent {
       }));
     }
     return list;
-  }
-
-  onChildrenDone (work: Work): Promise<any> {
-    return Promise.resolve();
   }
 }

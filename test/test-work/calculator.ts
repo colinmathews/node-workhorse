@@ -23,14 +23,14 @@ export default class Calculator implements IRunnable {
     });
   }
 
-  private createChildWork(input: any) {
+  onChildrenDone (work: Work): Promise<any> {
+    return Promise.resolve();
+  }
+
+  private createChildWork(input: any): Work[] {
     return [new Work(`${this.baseWorkPath}calculator`, {
       x: input.x,
       y: input.y
     })];
-  }
-
-  onChildrenDone (work: Work): Promise<any> {
-    return Promise.resolve();
   }
 }

@@ -33,6 +33,9 @@ var Child = (function (_super) {
             };
         });
     };
+    Child.prototype.onChildrenDone = function (work) {
+        return es6_promise_1.Promise.resolve();
+    };
     Child.prototype.getParentName = function (work) {
         return this.workhorse.state.load(work.parentID)
             .then(function (parent) {
@@ -52,9 +55,6 @@ var Child = (function (_super) {
             }));
         }
         return list;
-    };
-    Child.prototype.onChildrenDone = function (work) {
-        return es6_promise_1.Promise.resolve();
     };
     return Child;
 }(parent_1.default));
