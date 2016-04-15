@@ -16,5 +16,6 @@ import MemoryStateManager from './lib/services/memory-state-manager';
 import clone from './lib/util/clone';
 import { cloneInto } from './lib/util/clone';
 import deepDots from './lib/util/deep-dots';
+import { instantiate } from './lib/util/dynamic-loader';
 import Workhorse from './lib/workhorse';
-export { IRunnable, ILogger, IRouter, IStateManager, IWorkLoader, Config, LogLevel, Response, Route, WorkResult, Work, ConsoleLogger, FileWorkLoader, MemoryRouter, MemoryStateManager, Workhorse, clone, cloneInto, deepDots };
+export { IRunnable, ILogger, IRouter, IStateManager, IWorkLoader, Config, LogLevel, Response, Route, WorkResult, Work, ConsoleLogger, FileWorkLoader, MemoryRouter, MemoryStateManager, Workhorse, clone, cloneInto, deepDots, instantiate };

@@ -19,6 +19,7 @@ import MemoryStateManager from './lib/services/memory-state-manager';
 import clone from './lib/util/clone';
 import { cloneInto } from './lib/util/clone';
 import deepDots from './lib/util/deep-dots';
+import { instantiate } from './lib/util/dynamic-loader';
 
 import Workhorse from './lib/workhorse';
 
@@ -41,5 +42,6 @@ export {
   Workhorse,
   clone,
   cloneInto,
-  deepDots
+  deepDots,
+  instantiate
 }

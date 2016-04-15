@@ -1,3 +1,6 @@
+## 1.1.4
+* Exposing `instantiate` utility
+
 ## 1.1.3
 * Bug fix with deepDots not picking up nested properties
 
