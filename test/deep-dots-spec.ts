@@ -27,4 +27,18 @@ describe('Deep dots', () => {
     let dest = deepDots(source, 'a');
     assert.equal(dest, 'cracker');
   });
+
+  it('should return nothing when any part of path does not exist', () => {
+    let source = {
+      a: 'cracker',
+      deep1: {
+        deep2: {
+          value3: 'blah'
+        },
+        accounts: 2
+      }
+    };
+    let dest = deepDots(source, 'deep1.thisdoesnotexist.value3');
+    assert.isNull(dest);
+  });
 });

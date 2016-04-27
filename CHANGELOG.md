@@ -1,3 +1,6 @@
+## 1.1.5
+* Fix `deep-dots` for handling paths that don't exist
+
 ## 1.1.4
 * Exposing `instantiate` utility
 

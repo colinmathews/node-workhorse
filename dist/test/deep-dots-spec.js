@@ -26,5 +26,18 @@ describe('Deep dots', function () {
         var dest = deep_dots_1.default(source, 'a');
         chai_1.assert.equal(dest, 'cracker');
     });
+    it('should return nothing when any part of path does not exist', function () {
+        var source = {
+            a: 'cracker',
+            deep1: {
+                deep2: {
+                    value3: 'blah'
+                },
+                accounts: 2
+            }
+        };
+        var dest = deep_dots_1.default(source, 'deep1.thisdoesnotexist.value3');
+        chai_1.assert.isNull(dest);
+    });
 });
 //# sourceMappingURL=deep-dots-spec.js.map
