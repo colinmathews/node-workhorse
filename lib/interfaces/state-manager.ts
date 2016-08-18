@@ -16,4 +16,4 @@ interface IStateManager {
   childWorkFinished: (work: Work, parent: Work) => Promise<boolean>;
 }
 
-export default IStateManager
+export default IStateManager;

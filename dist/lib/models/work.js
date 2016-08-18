@@ -1,4 +1,5 @@
 "use strict";
+var es6_promise_1 = require('es6-promise');
 var clone_1 = require('../util/clone');
 var clone_2 = require('../util/clone');
 var Work = (function () {
@@ -21,7 +22,7 @@ var Work = (function () {
                 var promises = children.map(function (child) {
                     return child.deep(workhorse, levelsDeep - 1);
                 });
-                return Promise.all(promises)
+                return es6_promise_1.Promise.all(promises)
                     .then(function (result) {
                     json.children = result;
                     return json;

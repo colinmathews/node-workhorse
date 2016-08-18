@@ -7,4 +7,4 @@ interface IWorkLoader {
   getWork: (path: string) => Promise<Runnable>;
 }
 
-export default IWorkLoader
+export default IWorkLoader;

@@ -1,3 +1,4 @@
+import { Promise } from 'es6-promise';
 import IRunnable from '../interfaces/runnable';
 import WorkResult from './work-result';
 import Workhorse from '../workhorse';
@@ -14,6 +15,8 @@ export default class Work {
   childrenIDs: string[] = [];
   finishedChildrenIDs: string[] = [];
   ancestorLevel: number;
+  created: Date;
+  updated: Date;
 
   runnable: IRunnable;
 

@@ -37,6 +37,8 @@ describe('Family Tree', function () {
             return subject.run(baseWorkPath + "parent", { name: 'Colin', kids: 3, grandKids: 2 })
                 .then(function (work) {
                 chai_1.assert.isNotNull(work.result);
+                chai_1.assert.isOk(work.created);
+                chai_1.assert.isOk(work.updated);
                 return work.deep(subject);
             })
                 .then(function (pretty) {

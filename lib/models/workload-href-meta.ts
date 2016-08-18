@@ -2,8 +2,6 @@ import url = require('url');
 import path = require('path');
 
 export default class WorkloadHrefMeta {
-  constructor(public modulePath: string, public className: string) {}
-
   static parse(href: string): WorkloadHrefMeta {
     let meta = url.parse(href);
     if (meta.protocol === 'working:') {
@@ -25,4 +23,6 @@ export default class WorkloadHrefMeta {
     }
     return new WorkloadHrefMeta(modulePath, className);
   }
+
+  constructor(public modulePath: string, public className: string) {}
 }

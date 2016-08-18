@@ -14,4 +14,4 @@ interface ILogger {
   flush: () => Promise<any>;
 }
 
-export default ILogger
+export default ILogger;

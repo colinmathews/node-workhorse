@@ -9,4 +9,4 @@ interface IRunnable {
   onChildrenDone?: (work: Work) => Promise<any>;
 }
 
-export default IRunnable
+export default IRunnable;

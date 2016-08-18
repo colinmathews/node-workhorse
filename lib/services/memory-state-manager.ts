@@ -13,6 +13,10 @@ export default class MemoryStateManager implements IStateManager {
     if (!work.id) {
       work.id = (nextID++).toString();
     }
+    if (!work.created) {
+      work.created = new Date();
+    }
+    work.updated = new Date();
     stateMap[work.id] = work;
     return Promise.resolve(null);
   }

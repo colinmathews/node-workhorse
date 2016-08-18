@@ -9,6 +9,10 @@ var MemoryStateManager = (function () {
         if (!work.id) {
             work.id = (nextID++).toString();
         }
+        if (!work.created) {
+            work.created = new Date();
+        }
+        work.updated = new Date();
         stateMap[work.id] = work;
         return es6_promise_1.Promise.resolve(null);
     };

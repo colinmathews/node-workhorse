@@ -11,6 +11,8 @@ export default class Work {
     childrenIDs: string[];
     finishedChildrenIDs: string[];
     ancestorLevel: number;
+    created: Date;
+    updated: Date;
     runnable: IRunnable;
     constructor(workLoadHref?: string, input?: any);
     deep(workhorse: Workhorse, levelsDeep?: number): Promise<any>;

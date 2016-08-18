@@ -8,4 +8,4 @@ interface IRouter {
   routeFinalizer: (options: Route) => Promise<any>;
 }
 
-export default IRouter
+export default IRouter;
