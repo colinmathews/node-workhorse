@@ -3,6 +3,9 @@ import IStateManager from '../interfaces/state-manager';
 import Workhorse from '../workhorse';
 export default class MemoryStateManager implements IStateManager {
     workhorse: Workhorse;
+    stateMap: any;
+    private nextID;
+    constructor();
     save(work: Work): Promise<any>;
     saveAll(work: Work[]): Promise<any>;
     saveWorkStarted(work: Work): Promise<any>;

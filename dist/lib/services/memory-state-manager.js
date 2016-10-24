@@ -1,19 +1,19 @@
 "use strict";
 var es6_promise_1 = require('es6-promise');
-var nextID = 1;
-var stateMap = {};
 var MemoryStateManager = (function () {
     function MemoryStateManager() {
+        this.nextID = 1;
+        this.stateMap = {};
     }
     MemoryStateManager.prototype.save = function (work) {
         if (!work.id) {
-            work.id = (nextID++).toString();
+            work.id = (this.nextID++).toString();
         }
         if (!work.created) {
             work.created = new Date();
         }
         work.updated = new Date();
-        stateMap[work.id] = work;
+        this.stateMap[work.id] = work;
         return es6_promise_1.Promise.resolve(null);
     };
     MemoryStateManager.prototype.saveAll = function (work) {
@@ -42,7 +42,7 @@ var MemoryStateManager = (function () {
         return this.save(work);
     };
     MemoryStateManager.prototype.load = function (id) {
-        var work = stateMap[id];
+        var work = this.stateMap[id];
         return es6_promise_1.Promise.resolve(work);
     };
     MemoryStateManager.prototype.loadAll = function (ids) {

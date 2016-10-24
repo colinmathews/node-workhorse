@@ -3,21 +3,25 @@ import Work from '../models/work';
 import IStateManager from '../interfaces/state-manager';
 import Workhorse from '../workhorse';
 
-let nextID = 1;
-let stateMap = {};
-
 export default class MemoryStateManager implements IStateManager {
   workhorse: Workhorse;
+  stateMap: any;
+  private nextID: number;
+
+  constructor() {
+    this.nextID = 1;
+    this.stateMap = {};
+  }
 
   save (work: Work): Promise<any> {
     if (!work.id) {
-      work.id = (nextID++).toString();
+      work.id = (this.nextID++).toString();
     }
     if (!work.created) {
       work.created = new Date();
     }
     work.updated = new Date();
-    stateMap[work.id] = work;
+    this.stateMap[work.id] = work;
     return Promise.resolve(null);
   }
 
@@ -52,7 +56,7 @@ export default class MemoryStateManager implements IStateManager {
   }
 
   load (id: string): Promise<Work> {
-    let work = stateMap[id];
+    let work = this.stateMap[id];
     return Promise.resolve(work);
   }
 
