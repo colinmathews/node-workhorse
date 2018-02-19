@@ -17,6 +17,7 @@ export default class Workhorse {
     runFinalizer(work: Work): Promise<Work>;
     private normalizeRunData(data, input?);
     private runWork(work, runnable);
+    private wrapRunnable(work, runnable);
     private afterRun(work, childrenToSpawn);
     private onEnded(work, endType);
     private checkRunFinalizer(work);

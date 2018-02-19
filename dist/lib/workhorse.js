@@ -127,7 +127,7 @@ var Workhorse = (function () {
         return this.state.saveWorkStarted(work)
             .then(function () {
             _this.logger.logOutsideWork(work, 'Running work');
-            return runnable.run(work)
+            return _this.wrapRunnable(work, runnable)
                 .then(function (response) {
                 _this.logger.logOutsideWork(work, 'Work succeeded');
                 work.result.end(null, response.result);
@@ -146,6 +146,14 @@ var Workhorse = (function () {
             .then(function () {
             return _this.afterRun(work, childrenToSpawn);
         });
+    };
+    Workhorse.prototype.wrapRunnable = function (work, runnable) {
+        try {
+            return runnable.run(work);
+        }
+        catch (err) {
+            return es6_promise_1.Promise.reject(err);
+        }
     };
     Workhorse.prototype.afterRun = function (work, childrenToSpawn) {
         var _this = this;

@@ -125,25 +125,34 @@ export default class Workhorse {
     return this.state.saveWorkStarted(work)
     .then(() => {
       this.logger.logOutsideWork(work, 'Running work');
-      return runnable.run(work)
-      .then((response: Response) => {
-        this.logger.logOutsideWork(work, 'Work succeeded');
-        work.result.end(null, response.result);
-        childrenToSpawn = response.childWork;
-        if (!this.isAllowedToSpawnChildren(work, childrenToSpawn)) {
-          childrenToSpawn = [];
-          throw new Error('Recursion protection: cannot create child work because an ancestor level of ' +
-            `${work.ancestorLevel + 1} exceeds the configured value of ${this.config.maxAncestorLevelAllowed}`);
-        }
-      })
-      .catch((err: Error) => {
-        this.logger.logOutsideWork(work, 'Work failed', err);
-        work.result.end(err);
-      });
+      return this.wrapRunnable(work, runnable)
+        .then((response: Response) => {
+          this.logger.logOutsideWork(work, 'Work succeeded');
+          work.result.end(null, response.result);
+          childrenToSpawn = response.childWork;
+          if (!this.isAllowedToSpawnChildren(work, childrenToSpawn)) {
+            childrenToSpawn = [];
+            throw new Error('Recursion protection: cannot create child work because an ancestor level of ' +
+              `${work.ancestorLevel + 1} exceeds the configured value of ${this.config.maxAncestorLevelAllowed}`);
+          }
+        })
+        .catch((err: Error) => {
+          this.logger.logOutsideWork(work, 'Work failed', err);
+          work.result.end(err);
+        });
     })
     .then(() => {
       return this.afterRun(work, childrenToSpawn);
     });
+  }
+
+  private wrapRunnable(work: Work, runnable: IRunnable): Promise<Response> {
+    try {
+      return runnable.run(work);
+    }
+    catch (err) {
+      return Promise.reject(err);
+    }
   }
 
   private afterRun(work: Work, childrenToSpawn: Work[]): Promise<Work> {
@@ -168,7 +177,7 @@ export default class Workhorse {
     return Promise.resolve()
     .then(() => {
       if (endType === 'run') {
-        return this.logger.workEnded(work); 
+        return this.logger.workEnded(work);
       }
     })
     .then(() => {
@@ -180,7 +189,7 @@ export default class Workhorse {
       if (endType === 'run' && work.childrenIDs.length > 0) {
         return;
       }
-      
+
       let parent: Work;
       return this.state.load(work.parentID)
       .then((result: Work) => {
