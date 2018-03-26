@@ -119,31 +119,37 @@ export default class Workhorse {
 
   private runWork(work: Work, runnable: IRunnable): Promise<Work> {
     let childrenToSpawn: Work[];
-
+    work.hasFinalizer = !!runnable.onChildrenDone;
     work.result = new WorkResult();
     work.result.start();
-    return this.state.saveWorkStarted(work)
-    .then(() => {
-      this.logger.logOutsideWork(work, 'Running work');
-      return this.wrapRunnable(work, runnable)
-        .then((response: Response) => {
-          this.logger.logOutsideWork(work, 'Work succeeded');
-          work.result.end(null, response.result);
-          childrenToSpawn = response.childWork;
-          if (!this.isAllowedToSpawnChildren(work, childrenToSpawn)) {
-            childrenToSpawn = [];
-            throw new Error('Recursion protection: cannot create child work because an ancestor level of ' +
-              `${work.ancestorLevel + 1} exceeds the configured value of ${this.config.maxAncestorLevelAllowed}`);
-          }
-        })
-        .catch((err: Error) => {
-          this.logger.logOutsideWork(work, 'Work failed', err);
-          work.result.end(err);
-        });
-    })
-    .then(() => {
-      return this.afterRun(work, childrenToSpawn);
-    });
+    return Promise.resolve()
+      .then(() => {
+        if (work.hasFinalizer) {
+          return this.state.save(work);
+        }
+      })
+      .then(() => this.state.saveWorkStarted(work))
+      .then(() => {
+        this.logger.logOutsideWork(work, 'Running work');
+        return this.wrapRunnable(work, runnable)
+          .then((response: Response) => {
+            this.logger.logOutsideWork(work, 'Work succeeded');
+            work.result.end(null, response.result);
+            childrenToSpawn = response.childWork;
+            if (!this.isAllowedToSpawnChildren(work, childrenToSpawn)) {
+              childrenToSpawn = [];
+              throw new Error('Recursion protection: cannot create child work because an ancestor level of ' +
+                `${work.ancestorLevel + 1} exceeds the configured value of ${this.config.maxAncestorLevelAllowed}`);
+            }
+          })
+          .catch((err: Error) => {
+            this.logger.logOutsideWork(work, 'Work failed', err);
+            work.result.end(err);
+          });
+      })
+      .then(() => {
+        return this.afterRun(work, childrenToSpawn);
+      });
   }
 
   private wrapRunnable(work: Work, runnable: IRunnable): Promise<Response> {
@@ -205,15 +211,12 @@ export default class Workhorse {
   }
 
   private checkRunFinalizer(work: Work): Promise<void> {
-    return this.loader.getWork(work.workLoadHref)
-      .then((runnable: IRunnable) => {
-      if (!runnable.onChildrenDone) {
-        this.logger.logOutsideWork(work, 'All children are done, but no finalizer is defined');
-        return this.onEnded(work, 'children-done-no-finalizer');
-      }
-      this.logger.logOutsideWork(work, `Routing finalizer`);
-      return this.router.routeFinalizer({ workID: work.id });
-    });
+    if (!work.hasFinalizer) {
+      this.logger.logOutsideWork(work, 'All children are done, but no finalizer is defined');
+      return this.onEnded(work, 'children-done-no-finalizer');
+    }
+    this.logger.logOutsideWork(work, `Routing finalizer`);
+    return this.router.routeFinalizer({ workID: work.id });
   }
 
   private runFinalizerWork(work: Work, runnable: IRunnable): Promise<any> {

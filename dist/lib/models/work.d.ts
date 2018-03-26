@@ -13,6 +13,7 @@ export default class Work {
     ancestorLevel: number;
     created: Date;
     updated: Date;
+    hasFinalizer: boolean;
     runnable: IRunnable;
     constructor(workLoadHref?: string, input?: any);
     deep(workhorse: Workhorse, levelsDeep?: number): Promise<any>;

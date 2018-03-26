@@ -122,9 +122,16 @@ var Workhorse = (function () {
     Workhorse.prototype.runWork = function (work, runnable) {
         var _this = this;
         var childrenToSpawn;
+        work.hasFinalizer = !!runnable.onChildrenDone;
         work.result = new work_result_1.default();
         work.result.start();
-        return this.state.saveWorkStarted(work)
+        return es6_promise_1.Promise.resolve()
+            .then(function () {
+            if (work.hasFinalizer) {
+                return _this.state.save(work);
+            }
+        })
+            .then(function () { return _this.state.saveWorkStarted(work); })
             .then(function () {
             _this.logger.logOutsideWork(work, 'Running work');
             return _this.wrapRunnable(work, runnable)
@@ -203,16 +210,12 @@ var Workhorse = (function () {
         });
     };
     Workhorse.prototype.checkRunFinalizer = function (work) {
-        var _this = this;
-        return this.loader.getWork(work.workLoadHref)
-            .then(function (runnable) {
-            if (!runnable.onChildrenDone) {
-                _this.logger.logOutsideWork(work, 'All children are done, but no finalizer is defined');
-                return _this.onEnded(work, 'children-done-no-finalizer');
-            }
-            _this.logger.logOutsideWork(work, "Routing finalizer");
-            return _this.router.routeFinalizer({ workID: work.id });
-        });
+        if (!work.hasFinalizer) {
+            this.logger.logOutsideWork(work, 'All children are done, but no finalizer is defined');
+            return this.onEnded(work, 'children-done-no-finalizer');
+        }
+        this.logger.logOutsideWork(work, "Routing finalizer");
+        return this.router.routeFinalizer({ workID: work.id });
     };
     Workhorse.prototype.runFinalizerWork = function (work, runnable) {
         var _this = this;
