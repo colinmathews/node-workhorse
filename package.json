@@ -1,6 +1,6 @@
 {
   "name": "node-workhorse",
-  "version": "1.1.8",
+  "version": "2.0.0",
   "description": "Flexible framework for executing tasks.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
