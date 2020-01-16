@@ -1,11 +1,12 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 require('source-map-support').install({
     handleUncaughtExceptions: false
 });
-var chai_1 = require('chai');
-var Work_1 = require('../lib/models/Work');
-var clone_1 = require('../lib/util/clone');
-var clone_2 = require('../lib/util/clone');
+var chai_1 = require("chai");
+var Work_1 = require("../lib/models/Work");
+var clone_1 = require("../lib/util/clone");
+var clone_2 = require("../lib/util/clone");
 describe('Clone', function () {
     it('should duplicate an object without sharing references', function () {
         var source = {

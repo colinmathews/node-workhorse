@@ -1,7 +1,7 @@
 "use strict";
-var es6_promise_1 = require('es6-promise');
-var index_1 = require('../../index');
-var Parent = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var index_1 = require("../../index");
+var Parent = /** @class */ (function () {
     function Parent() {
         this.baseWorkPath = __dirname + "/";
     }
@@ -20,11 +20,11 @@ var Parent = (function () {
             };
         });
     };
-    Parent.prototype.onChildrenDone = function (work) {
-        return es6_promise_1.Promise.resolve();
+    Parent.prototype.onChildrenDone = function (_work) {
+        return Promise.resolve();
     };
     Parent.prototype.randomWait = function () {
-        return new es6_promise_1.Promise(function (ok, fail) {
+        return new Promise(function (ok) {
             var millis = Math.random() * 100;
             setTimeout(function () {
                 ok();
@@ -45,6 +45,5 @@ var Parent = (function () {
     };
     return Parent;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Parent;
 //# sourceMappingURL=parent.js.map

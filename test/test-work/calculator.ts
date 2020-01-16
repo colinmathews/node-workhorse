@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import { IRunnable, Workhorse, Response, Work } from '../../index';
 
 export default class Calculator implements IRunnable {
@@ -23,7 +22,7 @@ export default class Calculator implements IRunnable {
     });
   }
 
-  onChildrenDone (work: Work): Promise<any> {
+  onChildrenDone (_work: Work): Promise<any> {
     return Promise.resolve();
   }
 

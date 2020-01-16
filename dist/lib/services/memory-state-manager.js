@@ -1,6 +1,6 @@
 "use strict";
-var es6_promise_1 = require('es6-promise');
-var MemoryStateManager = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var MemoryStateManager = /** @class */ (function () {
     function MemoryStateManager() {
         this.nextID = 1;
         this.stateMap = {};
@@ -14,14 +14,14 @@ var MemoryStateManager = (function () {
         }
         work.updated = new Date();
         this.stateMap[work.id] = work;
-        return es6_promise_1.Promise.resolve(null);
+        return Promise.resolve(null);
     };
     MemoryStateManager.prototype.saveAll = function (work) {
         var _this = this;
         var promises = work.map(function (row) {
             return _this.save(row);
         });
-        return es6_promise_1.Promise.all(promises)
+        return Promise.all(promises)
             .then(function () {
             return null;
         });
@@ -43,14 +43,14 @@ var MemoryStateManager = (function () {
     };
     MemoryStateManager.prototype.load = function (id) {
         var work = this.stateMap[id];
-        return es6_promise_1.Promise.resolve(work);
+        return Promise.resolve(work);
     };
     MemoryStateManager.prototype.loadAll = function (ids) {
         var _this = this;
         var promises = ids.map(function (row) {
             return _this.load(row);
         });
-        return es6_promise_1.Promise.all(promises);
+        return Promise.all(promises);
     };
     MemoryStateManager.prototype.childWorkFinished = function (work, parent) {
         parent.finishedChildrenIDs.push(work.id);
@@ -62,6 +62,5 @@ var MemoryStateManager = (function () {
     };
     return MemoryStateManager;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = MemoryStateManager;
 //# sourceMappingURL=memory-state-manager.js.map

@@ -1,5 +1,6 @@
 "use strict";
-var MemoryRouter = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var MemoryRouter = /** @class */ (function () {
     function MemoryRouter() {
     }
     MemoryRouter.prototype.route = function (options) {
@@ -24,6 +25,5 @@ var MemoryRouter = (function () {
     };
     return MemoryRouter;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = MemoryRouter;
 //# sourceMappingURL=memory-router.js.map

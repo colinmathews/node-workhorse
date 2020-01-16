@@ -1,5 +1,6 @@
 "use strict";
-var WorkResult = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var WorkResult = /** @class */ (function () {
     function WorkResult() {
     }
     WorkResult.prototype.start = function () {
@@ -17,6 +18,5 @@ var WorkResult = (function () {
     };
     return WorkResult;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = WorkResult;
 //# sourceMappingURL=work-result.js.map

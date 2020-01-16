@@ -1,11 +1,11 @@
 "use strict";
-var es6_promise_1 = require('es6-promise');
-var config_1 = require('./models/config');
-var route_1 = require('./models/route');
-var work_1 = require('./models/work');
-var work_result_1 = require('./models/work-result');
-var dynamic_loader_1 = require('./util/dynamic-loader');
-var Workhorse = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var config_1 = require("./models/config");
+var route_1 = require("./models/route");
+var work_1 = require("./models/work");
+var work_result_1 = require("./models/work-result");
+var dynamic_loader_1 = require("./util/dynamic-loader");
+var Workhorse = /** @class */ (function () {
     function Workhorse(config) {
         if (config === void 0) { config = new config_1.default(); }
         this.config = config;
@@ -73,7 +73,7 @@ var Workhorse = (function () {
             work = result;
             return _this.router.route(new route_1.default({ workID: work.id }));
         })
-            .then(function (result) {
+            .then(function () {
             return work;
         });
     };
@@ -117,7 +117,7 @@ var Workhorse = (function () {
                 return work;
             });
         }
-        return es6_promise_1.Promise.resolve(work);
+        return Promise.resolve(work);
     };
     Workhorse.prototype.runWork = function (work, runnable) {
         var _this = this;
@@ -125,7 +125,7 @@ var Workhorse = (function () {
         work.hasFinalizer = !!runnable.onChildrenDone;
         work.result = new work_result_1.default();
         work.result.start();
-        return es6_promise_1.Promise.resolve()
+        return Promise.resolve()
             .then(function () {
             if (work.hasFinalizer) {
                 return _this.state.save(work);
@@ -142,7 +142,7 @@ var Workhorse = (function () {
                 if (!_this.isAllowedToSpawnChildren(work, childrenToSpawn)) {
                     childrenToSpawn = [];
                     throw new Error('Recursion protection: cannot create child work because an ancestor level of ' +
-                        ((work.ancestorLevel + 1) + " exceeds the configured value of " + _this.config.maxAncestorLevelAllowed));
+                        (work.ancestorLevel + 1 + " exceeds the configured value of " + _this.config.maxAncestorLevelAllowed));
                 }
             })
                 .catch(function (err) {
@@ -159,7 +159,7 @@ var Workhorse = (function () {
             return runnable.run(work);
         }
         catch (err) {
-            return es6_promise_1.Promise.reject(err);
+            return Promise.reject(err);
         }
     };
     Workhorse.prototype.afterRun = function (work, childrenToSpawn) {
@@ -182,7 +182,7 @@ var Workhorse = (function () {
     };
     Workhorse.prototype.onEnded = function (work, endType) {
         var _this = this;
-        return es6_promise_1.Promise.resolve()
+        return Promise.resolve()
             .then(function () {
             if (endType === 'run') {
                 return _this.logger.workEnded(work);
@@ -270,11 +270,10 @@ var Workhorse = (function () {
                 _this.logger.logOutsideWork(parent, "Routing child work: " + work.workLoadHref + ":" + work.id);
                 return _this.router.route({ workID: work.id });
             });
-            return es6_promise_1.Promise.all(promises);
+            return Promise.all(promises);
         });
     };
     return Workhorse;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Workhorse;
 //# sourceMappingURL=workhorse.js.map

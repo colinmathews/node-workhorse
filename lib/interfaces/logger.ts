@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import LogLevel from '../models/log-level';
 import Workhorse from '../workhorse';
 import Work from '../models/work';

@@ -1,7 +1,8 @@
 "use strict";
-var url = require('url');
-var path = require('path');
-var WorkloadHrefMeta = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var url = require("url");
+var path = require("path");
+var WorkloadHrefMeta = /** @class */ (function () {
     function WorkloadHrefMeta(modulePath, className) {
         this.modulePath = modulePath;
         this.className = className;
@@ -27,6 +28,5 @@ var WorkloadHrefMeta = (function () {
     };
     return WorkloadHrefMeta;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = WorkloadHrefMeta;
 //# sourceMappingURL=workload-href-meta.js.map

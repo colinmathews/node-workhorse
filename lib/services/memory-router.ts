@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import Route from '../models/route';
 import Work from '../models/work';
 import IRouter from '../interfaces/router';

@@ -1,10 +1,11 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 require('source-map-support').install({
     handleUncaughtExceptions: false
 });
-var chai_1 = require('chai');
-var path = require('path');
-var workload_href_meta_1 = require('../lib/models/workload-href-meta');
+var chai_1 = require("chai");
+var path = require("path");
+var workload_href_meta_1 = require("../lib/models/workload-href-meta");
 describe('WorkloadHrefMeta', function () {
     it('should parse working protocol', function () {
         var result = workload_href_meta_1.default.parse('working://module-name/lives/here:class-name');

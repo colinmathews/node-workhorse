@@ -1,24 +1,25 @@
 {
   "name": "node-workhorse",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Flexible framework for executing tasks.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "es6-promise": "^3.1.2",
-    "source-map-support": "^0.4.0"
+    "source-map-support": "^0.5.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^2.4.5",
-    "tsc": "^1.20150623.0",
-    "tslint": "^3.7.3",
-    "typescript": "^1.7.5",
-    "typings": "^0.6.8",
+    "@types/chai": "^4.2.7",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.24",
+    "@types/source-map-support": "^0.5.0",
+    "chai": "^4.2.0",
+    "mocha": "^7.0.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4",
     "uncommitted": "^1.0.0"
   },
   "scripts": {
-    "build": "npm run clean && npm run typings install && npm run tsc && npm run lint",
+    "build": "npm run clean && npm run tsc && npm run lint",
     "predopublish": "npm run build && uncommitted",
     "dopublish": "npm publish",
     "tsc": "tsc",
@@ -27,7 +28,6 @@
     "tsc:w": "tsc -w",
     "pretest": "npm run clean && npm run tsc",
     "test": "mocha",
-    "typings": "typings",
     "lint": "tslint lib/**/*.ts test/**/*.ts index.ts",
     "lint:q": "tslint --force lib/**/*.ts test/**/*.ts index.ts"
   },
@@ -40,5 +40,8 @@
   "bugs": {
     "url": "https://github.com/colinmathews/node-workhorse/issues"
   },
-  "homepage": "https://github.com/colinmathews/node-workhorse#readme"
+  "homepage": "https://github.com/colinmathews/node-workhorse#readme",
+  "mocha": {
+    "spec": "./dist/test"
+  }
 }

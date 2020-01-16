@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import { Response, Work } from '../../index';
 import Parent from './parent';
 
@@ -25,7 +24,7 @@ export default class Child extends Parent {
     });
   }
 
-  onChildrenDone(work: Work): Promise<any> {
+  onChildrenDone(_work: Work): Promise<any> {
     return Promise.resolve();
   }
 

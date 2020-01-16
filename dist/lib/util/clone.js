@@ -1,12 +1,12 @@
 "use strict";
-var util = require('util');
+Object.defineProperty(exports, "__esModule", { value: true });
+var util = require("util");
 // Error instances are special and don't stringify
 var errorProperties = ['message', 'name', 'stack', 'fileName', 'lineNumber', 'columnNumber'];
 var primitives = ['string', 'boolean', 'number', 'function', 'undefined'];
 var MAX_DEPTH = 50;
 // http://www.bennadel.com/blog/2664-cloning-regexp-regular-expression-objects-in-javascript.htm
 function cloneRegExp(input) {
-    'use strict';
     var pattern = input.source;
     var flags = '';
     if (input.global) {
@@ -21,7 +21,6 @@ function cloneRegExp(input) {
     return (new RegExp(pattern, flags));
 }
 function clone(source, depth) {
-    'use strict';
     if (depth === void 0) { depth = 0; }
     if (depth > MAX_DEPTH) {
         throw new Error('Possible circular cloning prevented');
@@ -62,10 +61,8 @@ function clone(source, depth) {
         return result;
     }, {});
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = clone;
 function cloneInto(source, dest) {
-    'use strict';
     var copy = clone(source);
     var props = Object.keys(copy);
     props.forEach(function (key) {

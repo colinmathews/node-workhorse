@@ -1,6 +1,7 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var DEFAULT_MAX_ANCESTOR_LEVEL = 30;
-var Config = (function () {
+var Config = /** @class */ (function () {
     function Config(props) {
         var _this = this;
         if (props === void 0) { props = {}; }
@@ -23,6 +24,5 @@ var Config = (function () {
     }
     return Config;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Config;
 //# sourceMappingURL=config.js.map

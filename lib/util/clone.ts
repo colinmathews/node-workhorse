@@ -9,7 +9,6 @@ const MAX_DEPTH = 50;
 
 // http://www.bennadel.com/blog/2664-cloning-regexp-regular-expression-objects-in-javascript.htm
 function cloneRegExp(input: RegExp): RegExp {
-  'use strict';
   let pattern = input.source;
   let flags = '';
   if (input.global) {
@@ -25,7 +24,6 @@ function cloneRegExp(input: RegExp): RegExp {
 }
 
 export default function clone(source: any, depth: number = 0): any {
-  'use strict';
   if (depth > MAX_DEPTH) {
     throw new Error('Possible circular cloning prevented');
   }
@@ -74,7 +72,6 @@ export default function clone(source: any, depth: number = 0): any {
 }
 
 export function cloneInto(source: any, dest: any): void {
-  'use strict';
   let copy = clone(source);
   let props = Object.keys(copy);
   props.forEach((key) => {
