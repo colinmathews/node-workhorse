@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import { Response, Work } from '../../index';
 import Child from './child';
 
@@ -25,7 +24,8 @@ export default class GrandChild extends Child {
           grandParentName: grandParentName,
           parentName: parentName,
           name: work.input.name
-        }
+        },
+        childWork: []
       };
     });
   }

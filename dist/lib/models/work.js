@@ -1,8 +1,8 @@
 "use strict";
-var es6_promise_1 = require('es6-promise');
-var clone_1 = require('../util/clone');
-var clone_2 = require('../util/clone');
-var Work = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var clone_1 = require("../util/clone");
+var clone_2 = require("../util/clone");
+var Work = /** @class */ (function () {
     function Work(workLoadHref, input) {
         this.childrenIDs = [];
         this.finishedChildrenIDs = [];
@@ -22,7 +22,7 @@ var Work = (function () {
                 var promises = children.map(function (child) {
                     return child.deep(workhorse, levelsDeep - 1);
                 });
-                return es6_promise_1.Promise.all(promises)
+                return Promise.all(promises)
                     .then(function (result) {
                     json.children = result;
                     return json;
@@ -37,6 +37,5 @@ var Work = (function () {
     };
     return Work;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Work;
 //# sourceMappingURL=work.js.map

@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import { IRunnable, Workhorse, Response, Work } from '../../index';
 
 export default class Parent implements IRunnable {
@@ -20,12 +19,12 @@ export default class Parent implements IRunnable {
     });
   }
 
-  onChildrenDone(work: Work): Promise<any> {
+  onChildrenDone(_work: Work): Promise<any> {
     return Promise.resolve();
   }
 
   protected randomWait(): Promise<any> {
-    return new Promise((ok, fail) => {
+    return new Promise(ok => {
       let millis = Math.random() * 100;
       setTimeout(
         () => {

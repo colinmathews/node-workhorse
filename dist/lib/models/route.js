@@ -1,5 +1,6 @@
 "use strict";
-var Route = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var Route = /** @class */ (function () {
     function Route(props) {
         var _this = this;
         if (props === void 0) { props = {}; }
@@ -9,6 +10,5 @@ var Route = (function () {
     }
     return Route;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Route;
 //# sourceMappingURL=route.js.map

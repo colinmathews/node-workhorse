@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import { Work } from '../../index';
 import Workhorse from '../workhorse';
 

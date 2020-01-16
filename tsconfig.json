@@ -8,12 +8,12 @@
     "removeComments": false,
     "noImplicitAny": false,
     "declaration": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "noUnusedParameters": true,
+    "noUnusedLocals": true
   },
   "exclude": [
     "node_modules",
-    "dist",
-    "typings/browser",
-    "typings/browser.d.ts"
+    "dist"
   ]
 }

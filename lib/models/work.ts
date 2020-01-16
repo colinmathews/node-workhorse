@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import IRunnable from '../interfaces/runnable';
 import WorkResult from './work-result';
 import Workhorse from '../workhorse';

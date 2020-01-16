@@ -2,7 +2,7 @@ require('source-map-support').install({
   handleUncaughtExceptions: false
 });
 import { assert } from 'chai';
-import { Workhorse, Config, Work, LogLevel } from '../index';
+import { Workhorse, Work, LogLevel } from '../index';
 
 describe('Calculator', () => {
   let subject : Workhorse;

@@ -1,9 +1,10 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 require('source-map-support').install({
     handleUncaughtExceptions: false
 });
-var chai_1 = require('chai');
-var index_1 = require('../index');
+var chai_1 = require("chai");
+var index_1 = require("../index");
 describe('Calculator', function () {
     var subject;
     var baseWorkPath = __dirname + "/test-work/";

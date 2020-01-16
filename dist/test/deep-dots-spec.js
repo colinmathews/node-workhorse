@@ -1,9 +1,10 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 require('source-map-support').install({
     handleUncaughtExceptions: false
 });
-var chai_1 = require('chai');
-var deep_dots_1 = require('../lib/util/deep-dots');
+var chai_1 = require("chai");
+var deep_dots_1 = require("../lib/util/deep-dots");
 describe('Deep dots', function () {
     it('should reach into nested properties', function () {
         var source = {

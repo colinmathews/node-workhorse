@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import Work from '../models/work';
 import IStateManager from '../interfaces/state-manager';
 import Workhorse from '../workhorse';

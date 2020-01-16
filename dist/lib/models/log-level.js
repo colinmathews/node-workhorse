@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var LogLevel;
 (function (LogLevel) {
     LogLevel[LogLevel["None"] = 1] = "None";
@@ -7,6 +8,5 @@ var LogLevel;
     LogLevel[LogLevel["Warn"] = 4] = "Warn";
     LogLevel[LogLevel["Error"] = 5] = "Error";
 })(LogLevel || (LogLevel = {}));
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = LogLevel;
 //# sourceMappingURL=log-level.js.map

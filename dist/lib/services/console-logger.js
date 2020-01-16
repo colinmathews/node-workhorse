@@ -1,7 +1,7 @@
 "use strict";
-var es6_promise_1 = require('es6-promise');
-var log_level_1 = require('../models/log-level');
-var ConsoleLogger = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var log_level_1 = require("../models/log-level");
+var ConsoleLogger = /** @class */ (function () {
     function ConsoleLogger() {
     }
     ConsoleLogger.parseLevel = function (level) {
@@ -65,16 +65,15 @@ var ConsoleLogger = (function () {
         return this.log(message + ": " + work.workLoadHref + ":" + work.id, level);
     };
     ConsoleLogger.prototype.workEnded = function () {
-        return es6_promise_1.Promise.resolve();
+        return Promise.resolve();
     };
     ConsoleLogger.prototype.finalizerRan = function () {
-        return es6_promise_1.Promise.resolve();
+        return Promise.resolve();
     };
     ConsoleLogger.prototype.flush = function () {
-        return es6_promise_1.Promise.resolve();
+        return Promise.resolve();
     };
     return ConsoleLogger;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ConsoleLogger;
 //# sourceMappingURL=console-logger.js.map

@@ -4,6 +4,6 @@ export default class Calculator implements IRunnable {
     workhorse: Workhorse;
     baseWorkPath: string;
     run(work: Work): Promise<Response>;
-    onChildrenDone(work: Work): Promise<any>;
-    private createChildWork(input);
+    onChildrenDone(_work: Work): Promise<any>;
+    private createChildWork;
 }

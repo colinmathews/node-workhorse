@@ -1,5 +1,4 @@
 export default function (source: any, path: string): any {
-  'use strict';
   let dots = path.split('.');
   let target = source;
   if (target === null || typeof(target) === 'undefined') {

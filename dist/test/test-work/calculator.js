@@ -1,14 +1,14 @@
 "use strict";
-var es6_promise_1 = require('es6-promise');
-var index_1 = require('../../index');
-var Calculator = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var index_1 = require("../../index");
+var Calculator = /** @class */ (function () {
     function Calculator() {
         this.errors = [];
         this.baseWorkPath = __dirname + "/";
     }
     Calculator.prototype.run = function (work) {
         var _this = this;
-        return new es6_promise_1.Promise(function (ok, fail) {
+        return new Promise(function (ok, fail) {
             var input = work.input;
             if (typeof (input.x) !== 'number' || typeof (input.y) !== 'number') {
                 return fail(new Error('Inputs must be numbers'));
@@ -23,8 +23,8 @@ var Calculator = (function () {
             });
         });
     };
-    Calculator.prototype.onChildrenDone = function (work) {
-        return es6_promise_1.Promise.resolve();
+    Calculator.prototype.onChildrenDone = function (_work) {
+        return Promise.resolve();
     };
     Calculator.prototype.createChildWork = function (input) {
         return [new index_1.Work(this.baseWorkPath + "calculator", {
@@ -34,6 +34,5 @@ var Calculator = (function () {
     };
     return Calculator;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Calculator;
 //# sourceMappingURL=calculator.js.map

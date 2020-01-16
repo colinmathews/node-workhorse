@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import IWorkLoader from './interfaces/work-loader';
 import IStateManager from './interfaces/state-manager';
 import ILogger from './interfaces/logger';
@@ -9,8 +8,7 @@ import Response from './models/response';
 import Route from './models/route';
 import Work from './models/work';
 import WorkResult from './models/work-result';
-import LogLevel from './models/log-level';
-import { instantiate, instantiateFromPath } from './util/dynamic-loader';
+import { instantiateFromPath } from './util/dynamic-loader';
 
 export default class Workhorse {
   constructor(public config: Config = new Config()) {
@@ -67,7 +65,7 @@ export default class Workhorse {
       work = result;
       return this.router.route(new Route({ workID: work.id }));
     })
-    .then((result) => {
+    .then(() => {
       return work;
     });
   }

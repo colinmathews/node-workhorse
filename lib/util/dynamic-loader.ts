@@ -16,22 +16,16 @@ let _loadClass = (modulePath, className) => {
 };
 
 export function instantiate(oClass: any): any {
-  'use strict';
   if (!oClass.prototype) {
     oClass = oClass.default;
   }
   if (!oClass.prototype) {
     return null;
   }
-  let instance = Object.create(oClass.prototype);
-  if (instance.constructor) {
-    instance.constructor.apply(instance);
-  }
-  return instance;
+  return new oClass();
 }
 
 export function instantiateFromPath(href: string): any {
-  'use strict';
   let meta = WorkloadHrefMeta.parse(href);
   let oClass = _loadClass(meta.modulePath, meta.className);
   let instance = instantiate(oClass);
